@@ -1,0 +1,119 @@
+.cards_section {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: 100vh;
+  background-image: url(https://media.istockphoto.com/photos/empty-green-casino-poker-table-cloth-with-spotlight-picture-id1092139474?k=20&m=1092139474&s=612x612&w=0&h=iWwvolq21sBzJZkqmigkdwNW6_cuQ1pQSNQmBE0a4V0=);
+  background-size: 100%;
+}
+.cards_section .playing_cards_container {
+  flex-basis: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.cards_section .playing_cards_container .playing_cards {
+  height: 20%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+.cards_section .playing_cards_container .playing_cards > * {
+  margin-left: -30px;
+}
+.cards_section .playing_cards_container .playing_cards img {
+  height: 100%;
+}
+.cards_section .playing_cards_container .my_cards_container .my_card_button {
+  width: auto;
+  height: 100%;
+  background: 0;
+  border: 0;
+  padding: 0;
+  display: block;
+  position: relative;
+  margin-left: -60px;
+}
+.cards_section .playing_cards_container .my_cards_container .my_card_button img {
+  height: 100% !important;
+}
+.cards_section .deck_container {
+  position: relative;
+  flex-basis: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+.cards_section .deck_container div {
+  position: relative;
+  display: flex;
+}
+.cards_section .deck_container div img {
+  height: 150px;
+  position: relative;
+  margin-left: -102px;
+}
+.cards_section .deck_container div :first-child {
+  transform: rotate(90deg);
+  right: 110px;
+}
+.cards_section .deck_container p {
+  color: yellow;
+  margin: 0;
+  font-size: 25px;
+  text-transform: uppercase;
+}
+.cards_section .play_field_container {
+  height: 60%;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.cards_section .play_field_container .play_cards_set {
+  position: relative;
+}
+.cards_section .play_field_container .play_cards_set .to_beated_card {
+  position: absolute;
+  position: absolute;
+  left: 0px;
+  bottom: 35px;
+}
+.cards_section .play_field_container .play_cards_set img {
+  height: 150px;
+}
+.cards_section .lights_out_container {
+  position: relative;
+  flex-basis: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.cards_section .lights_out_container .lights_out_container_inner {
+  position: relative;
+  display: flex;
+}
+.cards_section .lights_out_container .lights_out_container_inner img {
+  height: 150px;
+  margin-right: -95px;
+}
+.cards_section .lights_out_container button {
+  display: none;
+}
+
+html {
+  background-image: url(https://media.istockphoto.com/photos/empty-green-casino-poker-table-cloth-with-spotlight-picture-id1092139474?k=20&m=1092139474&s=612x612&w=0&h=iWwvolq21sBzJZkqmigkdwNW6_cuQ1pQSNQmBE0a4V0=);
+  background-size: 100%;
+}
+
+p {
+  color: yellow;
+  margin: 0;
+  font-size: 25px;
+  text-transform: uppercase;
+}
+/*# sourceMappingURL=main.css.map */
