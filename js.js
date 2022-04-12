@@ -139,9 +139,6 @@ let shuffling_function = function(container){
     if(chosen_trump ==Object.values(cards_object)[giving_card][0]){//fix
       console.log('was trump')
       was_card = true;
-      // press_F5.textContent = 'PRESS F5';
-      // press_F5.style.fontSize = '50px';
-      // play_field_container.appendChild(press_F5);
     }
     if(was_card==false){
       my_cards.push(Object.values(cards_object)[giving_card]);
@@ -155,6 +152,11 @@ let shuffling_function = function(container){
           was_card=false;
         }
       }
+    }
+    if(chosen_trump ==Object.values(cards_object)[giving_card][0]){
+      press_F5.textContent = 'PRESS F5';
+      press_F5.style.fontSize = '50px';
+      play_field_container.appendChild(press_F5);
     }
     been_cards_array.push(giving_card);
   }
@@ -222,91 +224,98 @@ if(my_trump_importance_array.length !==0 & enemy_importance_array.length !==0){
   let template_play = document.getElementById('template-play-field');
 
 
-  for(let i=0;i<my_cards_container.children.length;i++){
-    let clicked_card = my_cards_container.children[i];
-    let clicked_card_img = clicked_card.querySelector('img');
-    let was_importance_array=[];
-    clicked_card.addEventListener('click',function(){
-      console.log(play_field_container_imgs_2.length);
-      console.log(clicked_card_img.src);
-      let was_card_play_field = false;
-      let card_inf = 0;
-      for(let i=0;i<Object.values(cards_object).length;i++){
-        if(clicked_card_img.src ==Object.values(cards_object)[i][0]){
-          card_inf= Object.values(cards_object)[i];
+for(let i=0;i<my_cards_container.children.length;i++){
+  let clicked_card = my_cards_container.children[i];
+  let clicked_card_img = clicked_card.querySelector('img');
+  let was_importance_array=[];
+  clicked_card.addEventListener('click',function(){
+    console.log(play_field_container_imgs_2.length);
+    console.log(clicked_card_img.src);
+    let was_card_play_field = false;
+    let card_inf = 0;
+    for(let i=0;i<Object.values(cards_object).length;i++){
+      if(clicked_card_img.src ==Object.values(cards_object)[i][0]){
+        card_inf= Object.values(cards_object)[i];
+      }
+    }
+    for(let ii=0;ii<play_field_container_imgs_2.length;ii++){
+      console.log('haha');
+      for(let iii=0;iii<Object.values(cards_object).length;iii++){
+        if(play_field_container_imgs_2[ii].src ==Object.values(cards_object)[iii][0]){
+          was_importance_array.push(Object.values(cards_object)[iii][1]);
+          break;
         }
       }
-      for(let ii=0;ii<play_field_container_imgs_2.length;ii++){
-        console.log('haha');
-        for(let iii=0;iii<Object.values(cards_object).length;iii++){
-          if(play_field_container_imgs_2[ii].src ==Object.values(cards_object)[iii][0]){
-            was_importance_array.push(Object.values(cards_object)[iii][1]);
+    }
+    console.log(card_inf)
+    console.log(was_importance_array);
+    if(play_field_container_imgs_2 ==0 || result_of_my_move =='accept'){
+      if(my_cards_container.children.length <6 & result_of_my_move =='accept' & whose_victory ==''){
+        placing_my_cards();
+        
+      }
+      was_importance_array = [];
+      result_of_my_move = 0;
+      was_card_play_field = true;
+    }else if(result_of_my_move != 'lights_out'){
+      if(card_inf[2] == choice_badge_trump){
+        for(let ii=0;ii<was_importance_array.length;ii++){
+          console.log(was_importance_array[ii]+ ' and '+ card_inf[1])
+          if(card_inf[1]-100 == was_importance_array[ii] || card_inf[i] == was_importance_array[ii]){
+            was_card_play_field = true;
+            break;
+          }
+        }
+      }else{
+        for(let ii=0;ii<was_importance_array.length;ii++){
+          
+          if(card_inf[1] == was_importance_array[ii] || card_inf[1]+100 == was_importance_array[ii]){
+            was_card_play_field = true;
             break;
           }
         }
       }
-      console.log(card_inf)
-      console.log(was_importance_array);
-      if(play_field_container_imgs_2 ==0){
-        was_card_play_field = true;
-      }else{
-        if(card_inf[2] == choice_badge_trump){
-          for(let ii=0;ii<was_importance_array.length;ii++){
-            if(card_inf[1]-100 == was_importance_array[ii] || card_inf[i] == was_importance_array[ii]){
-              was_card_play_field = true;
-              break;
-            }
-          }
-        }else{
-          for(let ii=0;ii<was_importance_array.length;ii++){
-            if(card_inf[1] == was_importance_array[ii] || card_inf[1]+100 == was_importance_array[ii]){
-              was_card_play_field = true;
-              break;
-            }
-          }
-        }
+    }
+    if(was_card_play_field == true){
+      clicked_card.remove();
+      let template_play_copy = template_play.cloneNode(true).content;
+      let template_play_img = template_play_copy.querySelector('.beat_card');
+      template_play_img.src = clicked_card_img.src;
+      play_field_container.appendChild(template_play_copy);
+      console.log(play_field_container);
+      enemy_response= computer_beat_function(clicked_card_img,play_field_container.children[play_field_container.children.length-1],was_importance_array,result_of_my_move);
+      console.log(enemy_response)
+      let play_field_container_imgs = play_field_container.querySelectorAll('img');
+      console.log(play_field_container_imgs)
+      play_field_container_imgs_2 = play_field_container_imgs;
+      console.log(play_field_container_imgs_2);
+      if(my_cards_container.children.length ==0){
+        p_my.textContent = 'WINS';
+        whose_victory = 'my';
       }
-      if(was_card_play_field == true){
-        clicked_card.remove();
-        let template_play_copy = template_play.cloneNode(true).content;
-        let template_play_img = template_play_copy.querySelector('.beat_card');
-        template_play_img.src = clicked_card_img.src;
-        play_field_container.appendChild(template_play_copy);
-        console.log(play_field_container);
-        enemy_response= computer_beat_function(clicked_card_img,play_field_container.children[play_field_container.children.length-1],was_importance_array,result_of_my_move);
-        console.log(enemy_response)
-        let play_field_container_imgs = play_field_container.querySelectorAll('img');
-        console.log(play_field_container_imgs)
-        play_field_container_imgs_2 = play_field_container_imgs;
-        console.log(play_field_container_imgs_2);
-        if(my_cards_container.children.length ==0){
-          p_my.textContent = 'WINS';
-          result_of_my_move = 'win';
-          whose_victory = 'my';
-        }
+    }
+    if(enemy_response == 'accept'){
+    lights_out_button.style.display ='none';
+    result_of_my_move = enemy_response;
+    console.log(result_of_my_move);
+    whose_turn = 'my';
+    }
+    if(play_field_container.children.length>0){
+      if(result_of_my_move ==0){
+        lights_out_button.style.display ='block';
+        lights_out_button.addEventListener('click',function(){
+          console.log('hhhvvvvvvvv');
+          result_of_my_move = 'lights_out';
+          console.log(result_of_my_move);
+          lights_out_button.style.display ='none';
+          whose_turn = 'enemys';
+          lights_out_finction();
+        })
       }
-      if(enemy_response == 'accept'){
-      lights_out_button.style.display ='none';
-      result_of_my_move = enemy_response;
-      console.log(result_of_my_move);
-      whose_turn = 'my';
-      }
-      if(play_field_container.children.length>0){
-        if(result_of_my_move ==0){
-          lights_out_button.style.display ='block';
-          lights_out_button.addEventListener('click',function(){
-            console.log('hhhvvvvvvvv');
-            result_of_my_move = 'lights_out';
-            console.log(result_of_my_move);
-            lights_out_button.style.display ='none';
-            whose_turn = 'enemys';
-            lights_out_finction();
-          })
-        }
-      }
-    })
-  }
-  console.log(result_of_my_move)
+    }
+  })
+}
+console.log(result_of_my_move)
 
 
 
