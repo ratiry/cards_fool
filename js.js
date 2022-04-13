@@ -123,7 +123,9 @@ let seeking_for_repeats_function = function(was_card,giving_card){
   console.log(was_card)
   return was_card;
 }
+been_cards_array.push(chosen_trump);
 let shuffling_function = function(container){
+  console.log(been_cards_array)
   let my_cards = [];
   for(let i=0;i<6-container.children.length;i++){
     let giving_card= Math.floor(Math.random()*giving_cards.length);
@@ -132,7 +134,6 @@ let shuffling_function = function(container){
       if(giving_card ==been_cards_array[ii]){
         was_card=true;
         console.log(was_card);
-        
       }
       console.log(Object.values(cards_object)[giving_card][0]);
     }
@@ -147,16 +148,11 @@ let shuffling_function = function(container){
         giving_card= Math.floor(Math.random()*giving_cards.length);
         let was_card_2 = false;
         was_card_2= seeking_for_repeats_function(was_card_2,giving_card);
-        if(was_card_2 == false){
+        if(was_card_2 == false & giving_cards[giving_card][0] != chosen_trump){
           my_cards.push(Object.values(cards_object)[giving_card]);
           was_card=false;
         }
       }
-    }
-    if(chosen_trump ==Object.values(cards_object)[giving_card][0]){
-      press_F5.textContent = 'PRESS F5';
-      press_F5.style.fontSize = '50px';
-      play_field_container.appendChild(press_F5);
     }
     been_cards_array.push(giving_card);
   }
@@ -229,6 +225,7 @@ for(let i=0;i<my_cards_container.children.length;i++){
   let clicked_card_img = clicked_card.querySelector('img');
   let was_importance_array=[];
   clicked_card.addEventListener('click',function(){
+    console.log(clicked_card_img)
     console.log(play_field_container_imgs_2.length);
     console.log(clicked_card_img.src);
     let was_card_play_field = false;
