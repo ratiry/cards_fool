@@ -137,7 +137,7 @@ let shuffling_function = function(container){
       console.log(Object.values(cards_object)[giving_card][0]);
     }
     if(chosen_trump ==Object.values(cards_object)[giving_card][0]){//fix
-      console.log('was trump')
+      console.log('was trump');
       was_card = true;
     }
     if(was_card==false){
@@ -184,7 +184,7 @@ let placing_my_cards = function(){
   } 
 }
 placing_my_cards();
-let placing_enemy_carts = function(){
+let placing_enemy_cards = function(){
   let enemy_cards_quanity = shuffling_function(enemy_cards_container);
   for(let i=0;i<enemy_cards_quanity.length;i++){
     let img = document.createElement('img');
@@ -198,7 +198,7 @@ let placing_enemy_carts = function(){
     deck_container.children[i].remove();
   } 
 }
-placing_enemy_carts();
+placing_enemy_cards();
 let whose_turn = '';
 small_my_trump = Math.min.apply(null, my_trump_importance_array);
 small_enemy_trump =Math.min.apply(null, enemy_importance_array);
@@ -218,165 +218,54 @@ if(my_trump_importance_array.length !==0 & enemy_importance_array.length !==0){
   choice_first_move = 'my';
 }
 
-  let result_of_my_move = 0;
-  let enemy_response=0;
-  let play_field_container_imgs_2 = 0;
-  let template_play = document.getElementById('template-play-field');
+let result_of_my_move = 0;
+let enemy_response=0;
+let play_field_container_imgs_2 = 0;
 
+let count_for_clicking = 0;
+let flag_to_switch_move = false;
 
-for(let i=0;i<my_cards_container.children.length;i++){
-  let clicked_card = my_cards_container.children[i];
-  let clicked_card_img = clicked_card.querySelector('img');
-  let was_importance_array=[];
-  clicked_card.addEventListener('click',function(){
-    console.log(play_field_container_imgs_2.length);
-    console.log(clicked_card_img.src);
-    let was_card_play_field = false;
-    let card_inf = 0;
+let template_play = document.getElementById('template-play-field');
+
+let clicked_card = 0;
+let recognizing_card = function(card,button){
+  if(button == 'button'){
+    let card_img = card.querySelector('img');
     for(let i=0;i<Object.values(cards_object).length;i++){
-      if(clicked_card_img.src ==Object.values(cards_object)[i][0]){
-        card_inf= Object.values(cards_object)[i];
+      if(Object.values(cards_object)[i][0] == card_img.src){
+        let card_inf =[]; 
+        card_inf.push(Object.values(cards_object)[i][1]);
+        card_inf.push(Object.values(cards_object)[i][2]);
+        return card_inf;
       }
     }
-    for(let ii=0;ii<play_field_container_imgs_2.length;ii++){
-      console.log('haha');
-      for(let iii=0;iii<Object.values(cards_object).length;iii++){
-        if(play_field_container_imgs_2[ii].src ==Object.values(cards_object)[iii][0]){
-          was_importance_array.push(Object.values(cards_object)[iii][1]);
-          break;
-        }
+  }else{
+    for(let i=0;i<Object.values(cards_object).length;i++){
+      if(Object.values(cards_object)[i][0] == card.src){
+        let card_inf =[]; 
+        card_inf.push(Object.values(cards_object)[i][1]);
+        card_inf.push(Object.values(cards_object)[i][2]);
+        return card_inf;
       }
     }
-    console.log(card_inf)
-    console.log(was_importance_array);
-    if(play_field_container_imgs_2 ==0 || result_of_my_move =='accept'){
-      if(my_cards_container.children.length <6 & result_of_my_move =='accept' & whose_victory ==''){
-        placing_my_cards();
-        
-      }
-      was_importance_array = [];
-      result_of_my_move = 0;
-      was_card_play_field = true;
-    }else if(result_of_my_move != 'lights_out'){
-      if(card_inf[2] == choice_badge_trump){
-        for(let ii=0;ii<was_importance_array.length;ii++){
-          console.log(was_importance_array[ii]+ ' and '+ card_inf[1])
-          if(card_inf[1]-100 == was_importance_array[ii] || card_inf[i] == was_importance_array[ii]){
-            was_card_play_field = true;
-            break;
-          }
-        }
-      }else{
-        for(let ii=0;ii<was_importance_array.length;ii++){
-          
-          if(card_inf[1] == was_importance_array[ii] || card_inf[1]+100 == was_importance_array[ii]){
-            was_card_play_field = true;
-            break;
-          }
-        }
-      }
-    }
-    if(was_card_play_field == true){
-      clicked_card.remove();
-      let template_play_copy = template_play.cloneNode(true).content;
-      let template_play_img = template_play_copy.querySelector('.beat_card');
-      template_play_img.src = clicked_card_img.src;
-      play_field_container.appendChild(template_play_copy);
-      console.log(play_field_container);
-      enemy_response= computer_beat_function(clicked_card_img,play_field_container.children[play_field_container.children.length-1],was_importance_array,result_of_my_move);
-      console.log(enemy_response)
-      let play_field_container_imgs = play_field_container.querySelectorAll('img');
-      console.log(play_field_container_imgs)
-      play_field_container_imgs_2 = play_field_container_imgs;
-      console.log(play_field_container_imgs_2);
-      if(my_cards_container.children.length ==0){
-        p_my.textContent = 'WINS';
-        whose_victory = 'my';
-      }
-    }
-    if(enemy_response == 'accept'){
-    lights_out_button.style.display ='none';
-    result_of_my_move = enemy_response;
-    console.log(result_of_my_move);
-    whose_turn = 'my';
-    }
-    if(play_field_container.children.length>0){
-      if(result_of_my_move ==0){
-        lights_out_button.style.display ='block';
-        lights_out_button.addEventListener('click',function(){
-          console.log('hhhvvvvvvvv');
-          result_of_my_move = 'lights_out';
-          console.log(result_of_my_move);
-          lights_out_button.style.display ='none';
-          whose_turn = 'enemys';
-          lights_out_finction();
-        })
-      }
-    }
-  })
+  }
+} 
+
+let my_move_listener = function(event){
+  let card = event.target.parentNode;
+  if(flag_to_switch_move==true){
+    for(let i=0;i<my_cards_container.children.length;i++){
+      my_cards_container.children[i].removeEventListener('click',my_move_listener);
+      
+    }    
+  }else{
+    let card_inf = recognizing_card(card,'button');
+    console.log(card_inf[1]);
+  }
+} 
+for(let i=0;i<my_cards_container.children.length;i++){  
+
+  my_cards_container.children[i].addEventListener('click', my_move_listener);
 }
-console.log(result_of_my_move)
-
-
-
-
-
-let computer_beat_function = function(card,template_play_copy,was_importance_array,result_of_my_move){
-  let enemy_cards_inf_array = [];
-  let chosen_enemy_card = 0;
-  for(let i=0;i<Object.values(cards_object).length;i++){
-    if(card.src ==Object.values(cards_object)[i][0]){
-      card_inf= Object.values(cards_object)[i];
-    }
-  }
-  for(let i=0;i<enemy_cards_container.children.length;i++){
-    let enemy_img_src = enemy_cards_container.children[i].src;
-    for(let ii=0;ii<Object.values(cards_object).length;ii++){
-      if(enemy_img_src ==Object.values(cards_object)[ii][0]){
-        console.log(Object.keys(cards_object)[ii]);
-        enemy_cards_inf_array.push(Object.values(cards_object)[ii]);
-        break;
-      }
-    }
-  }
-
-  for(let i=0;i<enemy_cards_inf_array.length;i++){
-    if(enemy_cards_inf_array[i][2] == card_inf[2] || enemy_cards_inf_array[i][2] == choice_badge_trump){
-      if(enemy_cards_inf_array[i][1]>card_inf[1]){
-        console.log('hhh');
-        enemy_cards_container.children[i].remove();
-        let enemy_img =template_play_copy.querySelector('.to_beated_card');
-        enemy_img.src = enemy_cards_inf_array[i][0];
-        chosen_enemy_card = enemy_cards_inf_array[i][0];
-        console.log(template_play_copy);
-        console.log(enemy_cards_inf_array[i][0]);
-        break;
-      }
-    }
-  }
-  if(chosen_enemy_card ==0){
-    console.log('Works');
-    result_of_my_move = 'accept';
-    console.log(result_of_my_move);
-    let play_field_imgs = play_field_container.querySelectorAll('img');
-    for(let i=0;i<play_field_imgs.length;i++){
-      enemy_cards_container.appendChild(play_field_imgs[i]);     
-    }
-  }
-  return result_of_my_move;
-}
-let lights_out_finction = function(){
-  let play_field_imgs = play_field_container.querySelectorAll('img');
-  console.log(play_field_imgs)
-  for(let i=0;i<play_field_imgs.length;i++){
-    play_field_imgs[i].src = deck_card_src;
-    lights_out_container.appendChild(play_field_imgs[i]);
-  }
-  for(let i=0;i<play_field_container.children.length;i++){
-    play_field_container.children[i].remove();
-  }
-}
-
-
 
 
