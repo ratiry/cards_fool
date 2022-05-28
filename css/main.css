@@ -34,7 +34,7 @@
   padding: 0;
   display: block;
   position: relative;
-  margin-left: -60px;
+  margin-left: -30px;
 }
 .cards_section .playing_cards_container .my_cards_container .my_card_button img {
   height: 100% !important;
@@ -77,7 +77,7 @@
 .cards_section .play_field_container .play_cards_set {
   position: relative;
 }
-.cards_section .play_field_container .play_cards_set .to_beated_card {
+.cards_section .play_field_container .play_cards_set .to-beated-card {
   position: absolute;
   position: absolute;
   left: 0px;
@@ -115,5 +115,9 @@ p {
   margin: 0;
   font-size: 25px;
   text-transform: uppercase;
+}
+
+.display-block {
+  display: block;
 }
 /*# sourceMappingURL=main.css.map */

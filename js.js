@@ -63,7 +63,6 @@ let trump_array=[];
 let press_F5 = document.getElementById('press_F5');
 for(let i=0;i<Object.keys(cards_object).length;i++){
   if(Object.values(cards_object)[i][2] == choice_trump){
-    console.log('hh')
     Object.values(cards_object)[i][1] = Object.values(cards_object)[i][1] + 100;
     console.log( Object.values(cards_object)[i][1]);
     trump_array.push(Object.values(cards_object)[i]);
@@ -75,26 +74,40 @@ let chosen_trump = 0;
 let lights_out_container = document.querySelector('.lights_out_container_inner');
 let lights_out_button = document.getElementById('lights_out_button');
 let deck_container = document.getElementById('deck_container_inner');
+let chosen_trump_index =0;
 console.log(trump_array);
 for(let i=0;i<Object.values(cards_object).length;i++){
   let img = document.createElement('img');
   if(i==0){
-     chosen_trump = Math.floor(Math.random() * trump_array.length);
+    chosen_trump = Math.floor(Math.random() * trump_array.length);
     console.log(chosen_trump);
+    for(let ii=0;ii<Object.values(cards_object).length;ii++){
+      if(trump_array[chosen_trump] == Object.values(cards_object)[ii]){
+        chosen_trump_index = ii;
+        console.log(ii);
+        console.log(chosen_trump_index + ' index of trump')
+        break;
+      }
+    }
+    console.log(chosen_trump_index);
     img.src = trump_array[chosen_trump][0];
     console.log(img.src);
     chosen_trump = trump_array[chosen_trump][0];
   }else{
     img.src = deck_card_src;
   }
-  deck_container.appendChild(img)
+  deck_container.appendChild(img);
 }
+
+let been_cards_array = [];
+console.log(been_cards_array);
+been_cards_array.push(chosen_trump_index);
+
 let play_field_container = document.querySelector('.play_field_container');
 let my_cards_container = document.querySelector('.my_cards_container');
 let enemy_cards_container = document.querySelector('.enemy_cards_container');
 let p_my = document.getElementById('p_my');
 let p_enemys = document.getElementById('p_enemys');
-let been_cards_array = [];
 console.log(Object.values(cards_object))
 
 function bubbleSort(arr) {
@@ -114,61 +127,96 @@ function bubbleSort(arr) {
 }
 
 
+
 let seeking_for_repeats_function = function(was_card,giving_card){
   for(let ii=0;ii<been_cards_array.length;ii++){
     if(giving_card ==been_cards_array[ii]){
       was_card=true;
     }
   }
-  console.log(was_card)
+  console.log(was_card);
   return was_card;
 }
 let shuffling_function = function(container){
-  let my_cards = [];
-  for(let i=0;i<6-container.children.length;i++){
-    let giving_card= Math.floor(Math.random()*giving_cards.length);
-    let was_card = false;
-    for(let ii=0;ii<been_cards_array.length;ii++){
-      if(giving_card ==been_cards_array[ii]){
-        was_card=true;
-        console.log(was_card);
-        
+  if(deck_container.children.length > 6-container.children.length){
+    let my_cards = [];
+    for(let i=0;i<6-container.children.length;i++){
+      let giving_card= Math.floor(Math.random()*giving_cards.length);
+      let was_card = false;
+      for(let ii=0;ii<been_cards_array.length;ii++){
+        if(giving_card ==been_cards_array[ii]){
+          was_card=true;
+          console.log(was_card);
+        }
+        console.log(Object.values(cards_object)[giving_card][0]);
       }
-      console.log(Object.values(cards_object)[giving_card][0]);
-    }
-    if(chosen_trump ==Object.values(cards_object)[giving_card][0]){//fix
-      console.log('was trump');
-      was_card = true;
-    }
-    if(was_card==false){
-      my_cards.push(Object.values(cards_object)[giving_card]);
-    }else{
-      while(was_card == true){
-        giving_card= Math.floor(Math.random()*giving_cards.length);
-        let was_card_2 = false;
-        was_card_2= seeking_for_repeats_function(was_card_2,giving_card);
-        if(was_card_2 == false){
-          my_cards.push(Object.values(cards_object)[giving_card]);
-          was_card=false;
+      if(was_card==false){
+        my_cards.push(Object.values(cards_object)[giving_card]);
+      }else{
+        while(was_card == true){
+          giving_card= Math.floor(Math.random()*giving_cards.length);
+          let was_card_2 = false;
+          was_card_2= seeking_for_repeats_function(was_card_2,giving_card);
+          if(was_card_2 == false){
+            my_cards.push(Object.values(cards_object)[giving_card]);
+            was_card=false;
+          }
         }
       }
+
+      been_cards_array.push(giving_card);
     }
-    if(chosen_trump ==Object.values(cards_object)[giving_card][0]){
-      press_F5.textContent = 'PRESS F5';
-      press_F5.style.fontSize = '50px';
-      play_field_container.appendChild(press_F5);
+    console.log(my_cards);
+    my_cards = bubbleSort(my_cards);
+    return my_cards;
+  }else{
+    let my_cards = [];
+
+    for(let i=0;i<deck_container.children.length;i++){
+      let giving_card= Math.floor(Math.random()*giving_cards.length);
+      let was_card = false;
+      console.log(i)
+      if(i == deck_container.children.length-1){ 
+        console.log('ONE CARD IS LEFT');
+        been_cards_array.splice(0,1);
+      }
+      for(let ii=0;ii<been_cards_array.length;ii++){
+        if(giving_card ==been_cards_array[ii]){
+          was_card=true;
+          console.log(was_card);
+        }
+        console.log(Object.values(cards_object)[giving_card][0]);
+      }
+    
+      if(was_card==false){
+        my_cards.push(Object.values(cards_object)[giving_card]);
+      }else{
+        while(was_card == true){
+          giving_card= Math.floor(Math.random()*giving_cards.length);
+          let was_card_2 = false;
+          was_card_2= seeking_for_repeats_function(was_card_2,giving_card);
+          if(was_card_2 == false){
+            my_cards.push(Object.values(cards_object)[giving_card]);
+            was_card=false;
+          }
+        }
+      }
+
+      been_cards_array.push(giving_card);
     }
-    been_cards_array.push(giving_card);
+    console.log(my_cards);
+    my_cards = bubbleSort(my_cards);
+    console.log(my_cards);
+    return my_cards;
   }
-  console.log(my_cards);
-  my_cards = bubbleSort(my_cards);
-  return my_cards;
+
 }
 
 
 let template_my_card = document.getElementById('my_card_template');
 let placing_my_cards = function(){
-  let quanity_placing_numbers = shuffling_function(my_cards_container);
+  if(deck_container.children.length>0){
+    let quanity_placing_numbers = shuffling_function(my_cards_container);
   for(let i=0;i<quanity_placing_numbers.length;i++){
     let my_new_card = template_my_card.cloneNode(true).content;
     let my_new_card_img =my_new_card.querySelector('img');
@@ -179,56 +227,81 @@ let placing_my_cards = function(){
       console.log(quanity_placing_numbers[i][1])
     }
   }
-  for(let i=quanity_placing_numbers.length;i>0;i--){
-   deck_container.children[i].remove();
-  } 
+  console.log('ggg')
+  if(deck_container.children.length>quanity_placing_numbers.length){
+    for(let i=quanity_placing_numbers.length;i>0;i--){
+      deck_container.children[i].remove();
+      } 
+  }else{
+    for(let ii=0;ii<5;ii++){
+      for(let i=0;i<deck_container.children.length;i++){
+        deck_container.children[i].remove();
+      }
+    }
+  }
+  }
 }
 placing_my_cards();
 let placing_enemy_cards = function(){
-  let enemy_cards_quanity = shuffling_function(enemy_cards_container);
-  for(let i=0;i<enemy_cards_quanity.length;i++){
-    let img = document.createElement('img');
-    img.src = enemy_cards_quanity[i][0];
-    enemy_cards_container.appendChild(img);
-    if(enemy_cards_quanity[i][2] == choice_badge_trump){
-      enemy_importance_array.push(enemy_cards_quanity[i][1]);
+  if(deck_container.children.length>0){
+    let enemy_cards_quanity = shuffling_function(enemy_cards_container);
+    for(let i=0;i<enemy_cards_quanity.length;i++){
+      let img = document.createElement('img');
+      img.src = enemy_cards_quanity[i][0];
+      enemy_cards_container.appendChild(img);
+      if(enemy_cards_quanity[i][2] == choice_badge_trump){
+        enemy_importance_array.push(enemy_cards_quanity[i][1]);
+      }
+    }
+    if(deck_container.children.length>enemy_cards_quanity.length){
+      for(let i=enemy_cards_quanity.length;i>0;i--){
+        deck_container.children[i].remove();
+       } 
+    }else{
+      for(let ii=0;ii<5;ii++){
+        for(let i=0;i<deck_container.children.length;i++){
+          deck_container.children[i].remove();
+        }
+      }
     }
   }
-  for(let i=enemy_cards_quanity.length;i>0;i--){
-    deck_container.children[i].remove();
-  } 
 }
 placing_enemy_cards();
 let whose_turn = '';
 small_my_trump = Math.min.apply(null, my_trump_importance_array);
 small_enemy_trump =Math.min.apply(null, enemy_importance_array);
 let whose_victory = '';
+let flag_to_switch_move = false;
+
 if(my_trump_importance_array.length !==0 & enemy_importance_array.length !==0){
   if(small_my_trump > small_enemy_trump){
     console.log('enemys move');
     p_enemys.textContent = 'the first move';
     whose_turn = 'enemys';
+    flag_to_switch_move = true;
   }else{
     console.log('my move')
     p_my.textContent = 'the first move';
     whose_turn = 'my';
+    flag_to_switch_move = false;
   }
 }else{
   p_my.textContent = 'the first move';
   choice_first_move = 'my';
+  flag_to_switch_move = false;
 }
 
-let result_of_my_move = 0;
-let enemy_response=0;
-let play_field_container_imgs_2 = 0;
+let counting_doubles_function = function(array){
+  var counts = {};
 
+for (var i = 0; i < array.length; i++)
+    counts[array[i]] = (counts[array[i]] + 1) || 1;
+  return counts;
+}
 let count_for_clicking = 0;
-let flag_to_switch_move = false;
 
-let template_play = document.getElementById('template-play-field');
 
-let clicked_card = 0;
-let recognizing_card = function(card,button){
+let recognizing_card = function(card,button, worth, house){
   if(button == 'button'){
     let card_img = card.querySelector('img');
     for(let i=0;i<Object.values(cards_object).length;i++){
@@ -239,7 +312,7 @@ let recognizing_card = function(card,button){
         return card_inf;
       }
     }
-  }else{
+  }else if(button != 'find_img'){
     for(let i=0;i<Object.values(cards_object).length;i++){
       if(Object.values(cards_object)[i][0] == card.src){
         let card_inf =[]; 
@@ -248,24 +321,205 @@ let recognizing_card = function(card,button){
         return card_inf;
       }
     }
+  }else if(button == 'find_img'){
+    console.log(worth + ' ' + house);
+    for(let i=0;i<Object.values(cards_object).length;i++){
+      if(Object.values(cards_object)[i][1] == worth & Object.values(cards_object)[i][2] == house){
+        return Object.values(cards_object)[i][0];
+      }
+    }
   }
 } 
 
+
+
+
+let first_move_enemy = function(enemy_worth_array,enemy_house_array){
+  console.log(enemy_worth_array);
+  let counting_doubles_object = counting_doubles_function(enemy_worth_array);
+  console.log(counting_doubles_object);
+  let doubles = false;
+  for(let i=0;i<Object.keys(counting_doubles_object).length;i++){
+    if(Object.values(counting_doubles_object)[i] >1){
+      doubles = true;
+      break;
+    }
+  }
+  if(doubles == true){
+    console.log('DOUBLES');
+    let repeats = [];
+    for(let i=0;i<Object.values(counting_doubles_object).length;i++){
+      repeats.push(Object.values(counting_doubles_object)[i]);
+    }
+    let the_biggest_repeat = Math.max.apply(null,repeats);
+    console.log(the_biggest_repeat);
+    let enemys_worth_cards = 0;
+    for(let i=0;i<Object.keys(counting_doubles_object).length;i++){
+      if(Object.values(counting_doubles_object)[i] == the_biggest_repeat){
+        enemys_worth_cards = Object.keys(counting_doubles_object)[i];
+        break;
+      }
+    }
+    console.log(enemys_worth_cards);
+    let enemys_worth_cards_array = [];
+    for(let i=0;i<enemy_cards_container.children.length;i++){
+      if(recognizing_card(enemy_cards_container.children[i])[0] ==enemys_worth_cards ){
+        enemys_worth_cards_array.push(recognizing_card(enemy_cards_container.children[i]));
+      }
+    }
+    console.log(enemys_worth_cards_array);
+    let chosen_cards = [];
+    for(let i=0;i<enemys_worth_cards_array.length;i++){
+      chosen_cards.push(recognizing_card('','find_img',enemys_worth_cards_array[i][0],enemys_worth_cards_array[i][1])) ;
+    }
+    console.log(chosen_cards);
+    return chosen_cards[0];
+  }else{
+    let chosen_worth_card = Math.min.apply(null,enemy_worth_array);
+    let chosen_house_card = '';
+    for(let i=0;i<Object.keys(counting_doubles_object).length;i++){
+      if(chosen_worth_card ==Object.keys(counting_doubles_object)[i]){
+        chosen_house_card = enemy_house_array[i];
+        break;
+      }
+    }
+    let chosen_card = '';
+    console.log(chosen_house_card + ' ' + chosen_worth_card);
+    console.log(chosen_card);
+    chosen_card = recognizing_card('', 'find_img',chosen_worth_card,chosen_house_card);
+    console.log(chosen_card);
+    return chosen_card;
+  }
+}
+let selecting_enemys_cards = function(){
+  let enemy_worth_array = [];
+  let enemy_house_array = [];
+  for(let i=0;i<enemy_cards_container.children.length;i++){
+   let enemy_card_inf= recognizing_card(enemy_cards_container.children[i]);
+   enemy_worth_array.push(enemy_card_inf[0]);
+   enemy_house_array.push(enemy_card_inf[1]);
+  }
+  // condition : this code works when no img is on a table
+  if(play_field_container.childElementCount ==0){
+    return first_move_enemy(enemy_worth_array,enemy_house_array);
+  }else{
+    return '';
+  }
+}
+let template_play = document.getElementById('template-play-field');
+let clicked_card = 0;
+
+
+let accept_listener  = function(){
+  let play_field_imgs = play_field_container.querySelectorAll('img');
+  for(let i=0;i<play_field_imgs.length;i++){
+    making_my_card(play_field_imgs[i]);
+  }
+  enemys_move('accept');
+}
+
+
+let enemys_move_forming_card = function(enemy_card_src){
+  let enemy_imgs = enemy_cards_container.querySelectorAll('img');
+  for(let i=0;i<enemy_imgs.length;i++){
+    if(enemy_imgs[i].src == enemy_card_src){
+      enemy_imgs[i].remove();
+      if(enemy_cards_container.children.length ==0){
+        enemys_move('victory');
+      }
+      break;
+    }
+  }
+  let template_play_2 = template_play.cloneNode(true).content;
+  let enemy_card = template_play_2.querySelector('.beat-card');
+  enemy_card.src = enemy_card_src;
+  play_field_container.appendChild(template_play_2);
+  
+}
+let permitting_to_beat = function(inf_1,inf_2){
+  let permission = false;
+  if(inf_1[0] > inf_2[0]){
+    if(inf_1[1] == inf_2[1] || inf_1[1] ==choice_badge_trump){
+      permission = true;
+    }
+  }
+  return permission;
+}
+let making_my_card = function(img){
+  let button = document.createElement('button');
+  button.classList.add('my_card_button');
+  button.appendChild(img);
+  my_cards_container.appendChild(button);
+}
+
+
+
+
+let my_response = function(event){
+  let response_card = event.target;
+  let last_set_cards = play_field_container.children[play_field_container.children.length-1];
+  let beat_card = last_set_cards.querySelector('.beat-card');
+  let beat_card_inf = recognizing_card(beat_card);
+  let response_card_inf = recognizing_card(response_card);
+  if(permitting_to_beat(response_card_inf,beat_card_inf)){
+    console.log('RESPOND');
+    console.log(response_card);
+    let button_response_card = response_card.parentElement;
+    button_response_card.remove();
+    let beated_card = last_set_cards.querySelector('.to-beated-card');
+    beated_card.src = response_card.src; 
+    for(let i=0;i<my_cards_container.children.length;i++){
+      my_cards_container.children[i].removeEventListener('click',my_response);
+    }
+    enemys_move();
+  }
+}
+
+
+
+
+let enemys_move = function(result){
+  if(result !== 'victory'){
+    if(result == 'accept'){
+      placing_enemy_cards();
+    }
+    selecting_enemys_cards();
+    enemys_move_forming_card(selecting_enemys_cards());
+    for(let i=0;i<my_cards_container.children.length;i++){
+      my_cards_container.children[i].addEventListener('click',my_response);
+    }
+  }else if(result == 'victory'){
+    p_enemys.textContent = 'WON';
+  }
+}
+
+
 let my_move_listener = function(event){
   let card = event.target.parentNode;
+  console.log(card);
   if(flag_to_switch_move==true){
     for(let i=0;i<my_cards_container.children.length;i++){
       my_cards_container.children[i].removeEventListener('click',my_move_listener);
-      
-    }    
+    }
   }else{
     let card_inf = recognizing_card(card,'button');
     console.log(card_inf[1]);
   }
 } 
 for(let i=0;i<my_cards_container.children.length;i++){  
-
   my_cards_container.children[i].addEventListener('click', my_move_listener);
 }
 
 
+
+
+if(flag_to_switch_move == true){
+  for(let i=0;i<my_cards_container.children.length;i++){  
+    my_cards_container.children[i].removeEventListener('click', my_move_listener);
+  }
+  enemys_move();
+}else{
+  for(let i=0;i<my_cards_container.children.length;i++){  
+    my_cards_container.children[i].addEventListener('click', my_move_listener);
+  }
+}
