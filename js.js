@@ -333,6 +333,44 @@ let recognizing_card = function(card,button, worth, house){
 
 
 
+let futher_moves_enemy = function(enemy_worth_array,enemy_house_array,enemy_cards_inf){
+  let play_field_imgs = play_field_container.querySelectorAll('img');
+  let play_field_imgs_inf = [];
+  let giving_cards = [];
+  let to_resume = false;
+  for(let i=0;i<play_field_imgs.length;i++){
+    play_field_imgs_inf.push(recognizing_card(play_field_imgs[i]));
+  }
+  for(let i=0;i<play_field_imgs_inf.length;i++){
+    console.log(play_field_imgs_inf[i]);
+    for(let ii=0;ii<enemy_worth_array.length;ii++){
+      console.log(enemy_worth_array[ii]);
+      if(enemy_worth_array[ii] ==play_field_imgs_inf[i][0]  || enemy_worth_array[ii] ==play_field_imgs_inf[i][0]-100 ){
+        giving_cards.push(enemy_cards_inf[ii]);
+        to_resume = true;
+        break;       
+      }else if(deck_container.children.length ==0){
+        if(enemy_worth_array[ii]-100 ==play_field_imgs_inf[i][0]){
+          giving_cards.push(enemy_cards_inf[ii]);
+          to_resume = true;
+          break;
+        }
+      }
+    }
+  }
+  if(to_resume == true){
+    console.log(giving_cards);
+    let chosen_card_inf = giving_cards[0];
+    console.log(chosen_card_inf)
+    let chosen_card = recognizing_card('','find_img',chosen_card_inf[0],chosen_card_inf[1]); 
+    console.log(chosen_card);
+    return chosen_card;
+  }else{
+    return 'lights_out';
+  } 
+}
+
+
 
 let first_move_enemy = function(enemy_worth_array,enemy_house_array){
   console.log(enemy_worth_array);
@@ -391,19 +429,21 @@ let first_move_enemy = function(enemy_worth_array,enemy_house_array){
     return chosen_card;
   }
 }
+ 
 let selecting_enemys_cards = function(){
   let enemy_worth_array = [];
   let enemy_house_array = [];
+  let enemy_cards_inf = [];
   for(let i=0;i<enemy_cards_container.children.length;i++){
    let enemy_card_inf= recognizing_card(enemy_cards_container.children[i]);
    enemy_worth_array.push(enemy_card_inf[0]);
    enemy_house_array.push(enemy_card_inf[1]);
+   enemy_cards_inf.push(enemy_card_inf);
   }
-  // condition : this code works when no img is on a table
   if(play_field_container.childElementCount ==0){
     return first_move_enemy(enemy_worth_array,enemy_house_array);
   }else{
-    return '';
+    return futher_moves_enemy(enemy_worth_array,enemy_house_array, enemy_cards_inf);
   }
 }
 let template_play = document.getElementById('template-play-field');
@@ -411,11 +451,22 @@ let clicked_card = 0;
 
 
 let accept_listener  = function(){
+  lights_out_button.removeEventListener('click',accept_listener);
+  lights_out_button.style.display = 'none';
   let play_field_imgs = play_field_container.querySelectorAll('img');
   for(let i=0;i<play_field_imgs.length;i++){
     making_my_card(play_field_imgs[i]);
   }
-  enemys_move('accept');
+  if(enemy_cards_container.children.length <6){
+    placing_enemy_cards();
+  }
+  for(let i=0;i<play_field_container.children.length;i++){
+    play_field_container.children[i].remove();
+  }
+  for(let i=0;i<play_field_container.children.length;i++){
+    play_field_container.children[i].remove();
+  }
+  enemys_move();
 }
 
 
@@ -475,18 +526,49 @@ let my_response = function(event){
   }
 }
 
+let lights_out_function = function(){
+  let play_field_imgs = play_field_container.querySelectorAll('img');
+  for(let i=0;i<play_field_imgs.length;i++){
+    play_field_imgs[i].parentElement.remove();
+    play_field_imgs[i].remove();
+    play_field_imgs[i].src = deck_card_src;
+    lights_out_container.appendChild(play_field_imgs[i]);
 
+  }
+}
 
 
 let enemys_move = function(result){
+  p_enemys.textContent = 'moves';
+  p_my.textContent = '';
   if(result !== 'victory'){
-    if(result == 'accept'){
-      placing_enemy_cards();
-    }
-    selecting_enemys_cards();
-    enemys_move_forming_card(selecting_enemys_cards());
-    for(let i=0;i<my_cards_container.children.length;i++){
-      my_cards_container.children[i].addEventListener('click',my_response);
+    if(result == 'lights_out'){
+      lights_out_function();
+      if(enemy_cards_container.children.length <6){
+        placing_enemy_cards();
+      }
+      if(my_cards_container.children.length <6){
+        placing_my_cards();
+      }
+      for(let i=0;i<my_cards_container.children.length;i++){
+        my_cards_container.children[i].removeEventListener('click',my_response);
+      }
+      lights_out_button.style.display = 'none';
+      lights_out_button.removeEventListener('click',accept_listener);
+      return my_move();
+    }else{
+      selecting_enemys_cards();
+      let selected_enemy_card = selecting_enemys_cards();
+      if(selected_enemy_card == 'lights_out'){
+        return enemys_move('lights_out');
+      } 
+      enemys_move_forming_card(selecting_enemys_cards());
+      lights_out_button.style.display = 'block';
+      lights_out_button.textContent = 'accept';
+      lights_out_button.addEventListener('click',accept_listener);
+      for(let i=0;i<my_cards_container.children.length;i++){
+        my_cards_container.children[i].addEventListener('click',my_response);
+      }
     }
   }else if(result == 'victory'){
     p_enemys.textContent = 'WON';
@@ -495,20 +577,18 @@ let enemys_move = function(result){
 
 
 let my_move_listener = function(event){
-  let card = event.target.parentNode;
-  console.log(card);
-  if(flag_to_switch_move==true){
-    for(let i=0;i<my_cards_container.children.length;i++){
-      my_cards_container.children[i].removeEventListener('click',my_move_listener);
-    }
-  }else{
-    let card_inf = recognizing_card(card,'button');
-    console.log(card_inf[1]);
-  }
+  let card = recognizing_card(event.target);
+  console.log(card[0]);
 } 
-for(let i=0;i<my_cards_container.children.length;i++){  
-  my_cards_container.children[i].addEventListener('click', my_move_listener);
+let my_move = function(result){
+  p_enemys.textContent = '';
+  p_my.textContent = 'moves';
+  for(let i=0;i<my_cards_container.children.length;i++){
+    my_cards_container.children[i].addEventListener('click',my_move_listener);
+  }
 }
+
+
 
 
 
@@ -519,7 +599,5 @@ if(flag_to_switch_move == true){
   }
   enemys_move();
 }else{
-  for(let i=0;i<my_cards_container.children.length;i++){  
-    my_cards_container.children[i].addEventListener('click', my_move_listener);
-  }
+  my_move();
 }
