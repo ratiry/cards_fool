@@ -34,7 +34,7 @@
         padding:0;
         display:block;
         position:relative;
-        margin-left:-60px;
+        margin-left:-30px;
         img{
           height:100% !important;
         }
@@ -78,7 +78,7 @@
     .play_cards_set{
       position:relative;
 
-      .to_beated_card{
+      .to-beated-card{
         position:absolute;
         position: absolute;
         left: 0px;
@@ -117,4 +117,7 @@ p{
   margin:0;
   font-size:25px;
   text-transform: uppercase;
+}
+.display-block{
+  display:block;
 }
