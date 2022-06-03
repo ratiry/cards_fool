@@ -270,7 +270,6 @@ placing_enemy_cards();
 let whose_turn = '';
 small_my_trump = Math.min.apply(null, my_trump_importance_array);
 small_enemy_trump =Math.min.apply(null, enemy_importance_array);
-let whose_victory = '';
 let flag_to_switch_move = false;
 
 if(my_trump_importance_array.length !==0 & enemy_importance_array.length !==0){
@@ -506,11 +505,12 @@ let accept_listener  = function(){
 
 let enemys_move_forming_card = function(enemy_card_src){
   let enemy_imgs = enemy_cards_container.querySelectorAll('img');
+  let victory_flag = false;
   for(let i=0;i<enemy_imgs.length;i++){
     if(enemy_imgs[i].src == enemy_card_src){
       enemy_imgs[i].remove();
       if(enemy_cards_container.children.length ==0){
-        enemys_move('enemys victory');
+        victory_flag = true;
       }
       break;
     }
@@ -519,6 +519,9 @@ let enemys_move_forming_card = function(enemy_card_src){
   let enemy_card = template_play_2.querySelector('.beat-card');
   enemy_card.src = enemy_card_src;
   play_field_container.appendChild(template_play_2);
+  if(victory_flag == true){
+    return enemys_move('victory');
+  }
   
 }
 let permitting_to_beat = function(inf_1,inf_2){
@@ -552,6 +555,8 @@ let my_response = function(event){
     let button_response_card = response_card.parentElement;
     button_response_card.remove();
     if(my_cards_container.children.length ==0){
+      let beated_card = last_set_cards.querySelector('.to-beated-card');
+      beated_card.src = response_card.src; 
       enemys_move('my victory');
     }else{
       let beated_card = last_set_cards.querySelector('.to-beated-card');
@@ -608,11 +613,15 @@ let enemys_move = function(result){
       placing_enemy_cards();
       enemys_move();
     }
-  }else if(result == 'enemys victory'){
+  }else if(result == 'victory'){
     p_enemys.textContent = 'WON';
+    lights_out_button.removeEventListener('click',accept_listener);
+    lights_out_button.style.display = '';
   }else if(result == 'my victory'){
     p_enemys.textContent = '';
     p_my.textContent = 'WON';
+    lights_out_button.removeEventListener('click',accept_listener);
+    lights_out_button.style.display = '';
   }
 }
 
@@ -666,6 +675,10 @@ let my_move_listener = function(event){
     console.log(card.parentElement);
     card.parentElement.remove();
     if(my_cards_container.children.length ==0){
+      play_set_beat_img.src = card.src;
+      console.log(card.src)
+      console.log(play_set_beat_img);
+      play_field_container.appendChild(play_set);
       enemys_move('my victory');
     }else{
       play_set_beat_img.src = card.src;
@@ -746,9 +759,13 @@ let my_move = function(result){
   }else if(result == 'enemys victory'){
     p_enemys.textContent = 'WON';
     p_my.textContent = '';
+    lights_out_button.removeEventListener('click',lights_out_listener);
+    lights_out_button.style.display = '';
   }else if(result == 'my victory'){
     p_enemys.textContent = '';
     p_my.textContent = 'WON';
+    lights_out_button.removeEventListener('click',lights_out_listener);
+    lights_out_button.style.display = '';
   }
 }
 
