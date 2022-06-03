@@ -637,7 +637,12 @@ let enemys_response = function(){
   let response_cards = [];
   let response_cards_worth = [];
   for(let i=0;i<enemys_cards_inf.length;i++){
-    if(enemys_cards_inf[i][0] > beat_card_inf[0] & enemys_cards_inf[i][1] == beat_card_inf[1]){
+    if(enemys_cards_inf[i][0] > beat_card_inf[0] & enemys_cards_inf[i][1] == beat_card_inf[1] ){
+      response_cards.push(enemys_cards_inf[i]);
+      response_cards_worth.push(enemys_cards_inf[i][0]);
+    }else if( enemys_cards_inf[i][1] == choice_badge_trump & enemys_cards_inf[i][0] > beat_card_inf[0] ){
+      console.log('BEAT WITH TRUMP');
+      console.log(enemys_cards_inf[i][0]);
       response_cards.push(enemys_cards_inf[i]);
       response_cards_worth.push(enemys_cards_inf[i][0]);
     }
@@ -645,7 +650,13 @@ let enemys_response = function(){
   if(response_cards.length !=0){
     let chosen_card_worth = Math.min.apply(null, response_cards_worth);
     console.log(chosen_card_worth);
-    let chosen_card_src = recognizing_card('','find_img',chosen_card_worth,beat_card_inf[1]);
+    let chosen_card_src = '';
+    if(chosen_card_worth >100){
+      console.log('worth is over 100');
+      chosen_card_src = recognizing_card('','find_img',chosen_card_worth,choice_badge_trump);
+    }else{
+      chosen_card_src = recognizing_card('','find_img',chosen_card_worth,beat_card_inf[1]);
+    }
     console.log(chosen_card_src);
     let to_beated_card = play_set.querySelector('.to-beated-card');
     console.log(to_beated_card);
