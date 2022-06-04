@@ -166,9 +166,12 @@ p {
   background: none;
   border: none;
   transition: all 0.5s ease;
+  font-weight: bold;
+  color: yellow;
 }
 .end-game-popup .press_F5-container:hover button {
   background: yellow;
+  color: black;
 }
 
 html.end-game {

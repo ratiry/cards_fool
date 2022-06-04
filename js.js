@@ -729,8 +729,8 @@ let lights_out_listener = function(){
     play_field_imgs[i].src = deck_card_src;
     lights_out_container.appendChild(play_field_imgs[i]);
   }
-  placing_enemy_cards();
   placing_my_cards();
+  placing_enemy_cards();
   lights_out_button.removeEventListener('click',lights_out_listener);
   lights_out_button.style.display = 'none';
   my_move('lights_out');
@@ -752,6 +752,7 @@ let my_move = function(result){
       for(let i=0;i<my_cards_container.children.length;i++){
         my_cards_container.children[i].removeEventListener('click',my_move_listener);
       }
+     
       return enemys_move();
     }else{
       p_enemys.textContent = '';
