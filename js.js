@@ -801,3 +801,10 @@ if(flag_to_switch_move == true){
 }else{
   my_move();
 }
+
+let press_F5_buttons = document.querySelectorAll('.press_F5_button');
+for(let i=0;i<press_F5_buttons.length;i++){
+  press_F5_buttons[i].addEventListener('click', function(){
+    location.reload();
+  });
+}
