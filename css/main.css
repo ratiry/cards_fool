@@ -189,4 +189,10 @@ html.end-game.enemys-victory .end-game-popup.defeat {
   visibility: visible;
   opacity: 1;
 }
+
+html.end-game.my-victory .end-game-popup.victory {
+  transform: scale(1) translateY(-50%) translateX(-50%);
+  visibility: visible;
+  opacity: 1;
+}
 /*# sourceMappingURL=main.css.map */
