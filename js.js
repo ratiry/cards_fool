@@ -125,6 +125,11 @@ function bubbleSort(arr) {
   }
   return arr;
 }
+function sorting_cards(container){
+  if(container == my_cards_container){
+
+  }
+}
 
 
 

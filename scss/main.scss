@@ -2,7 +2,7 @@
   display:flex;
   flex-direction:row;
   width :100vw;
-  height:100vh;
+  height:100%;
   background-image:url(https://media.istockphoto.com/photos/empty-green-casino-poker-table-cloth-with-spotlight-picture-id1092139474?k=20&m=1092139474&s=612x612&w=0&h=iWwvolq21sBzJZkqmigkdwNW6_cuQ1pQSNQmBE0a4V0=);
   background-size:100%;
   // position:relative;
@@ -13,18 +13,19 @@
     justify-content:space-between;
     align-items:center;
     .playing_cards{
-      height:20%;
+      min-height:20vh;
       display:flex;
       flex-wrap:wrap;
       justify-content: center;
       width:100%;
-      
+      height:auto;  
       // flex-wrap: wrap;
       & >*{
         margin-left:-30px;
+        height:auto;
       }
       img{
-        height:100%;
+        height:150px;
       }
     }
     .my_cards_container{
@@ -37,8 +38,9 @@
         display:block;
         position:relative;
         margin-left:-30px;
+        height:auto;
         img{
-          height:100% !important;
+          // height:100% !important;
         }
       }
     }
@@ -71,7 +73,7 @@
     }
   }
   .play_field_container{
-    height: 60%;
+    height: 60vh;
     width: 100%;
     display: flex;
     flex-wrap:wrap;
@@ -79,7 +81,6 @@
     align-items:center;
     .play_cards_set{
       position:relative;
-
       .to-beated-card{
         position:absolute;
         position: absolute;
@@ -123,15 +124,9 @@ p{
 .display-block{
   display:block;
 }
-.overlay{
-  width:100vw;
-  height:100vh;
-  background:black;
-  opacity:0.5;
-  display:none;
-  position:absolute;
-}
+
 .end-game-popup{
+  z-index:100;
   transition:all 1s linear;
   visibility:hidden;
   position:absolute;
@@ -206,4 +201,16 @@ html.end-game.my-victory{
     visibility:visible;
     opacity:1;
   }
+}
+.overlay{
+  width:100vw;
+  height:100%;
+  background:black;
+  opacity:0.5;
+  display:none;
+  position:absolute;
+  top: 0;
+}
+body{
+  position:relative;
 }
