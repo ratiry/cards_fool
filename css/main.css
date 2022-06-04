@@ -5,6 +5,7 @@
   height: 100vh;
   background-image: url(https://media.istockphoto.com/photos/empty-green-casino-poker-table-cloth-with-spotlight-picture-id1092139474?k=20&m=1092139474&s=612x612&w=0&h=iWwvolq21sBzJZkqmigkdwNW6_cuQ1pQSNQmBE0a4V0=);
   background-size: 100%;
+  position: relative;
 }
 .cards_section .playing_cards_container {
   flex-basis: 60%;
@@ -119,5 +120,74 @@ p {
 
 .display-block {
   display: block;
+}
+
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  opacity: 0.5;
+  display: none;
+  position: absolute;
+}
+
+.end-game-popup {
+  transition: all 1s linear;
+  visibility: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%) scale(0.4);
+  opacity: 0.4;
+  background: green;
+  border-radius: 30px;
+  max-width: 210px;
+}
+.end-game-popup div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.end-game-popup p {
+  text-align: center;
+}
+.end-game-popup svg path {
+  fill: yellow;
+}
+.end-game-popup .advise {
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.end-game-popup .advise span {
+  color: yellow;
+  text-align: center;
+}
+.end-game-popup .press_F5-container button {
+  background: none;
+  border: none;
+  transition: all 0.5s ease;
+}
+.end-game-popup .press_F5-container:hover button {
+  background: yellow;
+}
+
+html.end-game {
+  overflow: hidden;
+}
+html.end-game .overlay {
+  display: block;
+}
+
+html.end-game.my-victory .end-game-popup.victory {
+  transform: scale(1) translateY(-50%) translateX(-50%);
+  visibility: visible;
+  opacity: 1;
+}
+
+html.end-game.enemys-victory .end-game-popup.defeat {
+  transform: scale(1) translateY(-50%) translateX(-50%);
+  visibility: visible;
+  opacity: 1;
 }
 /*# sourceMappingURL=main.css.map */

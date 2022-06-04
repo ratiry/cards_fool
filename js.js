@@ -1,4 +1,4 @@
-
+let html = document.querySelector('html');
 let hearts_importance=0;
 let squares_importance = 0;
 let leaves_importance = 0;
@@ -616,12 +616,16 @@ let enemys_move = function(result){
   }else if(result == 'victory'){
     p_enemys.textContent = 'WON';
     lights_out_button.removeEventListener('click',accept_listener);
-    lights_out_button.style.display = '';
+    lights_out_button.style.display = 'none';
+    html.classList.add('end-game');
+    html.classList.add('enemys-victory');
   }else if(result == 'my victory'){
     p_enemys.textContent = '';
     p_my.textContent = 'WON';
     lights_out_button.removeEventListener('click',accept_listener);
-    lights_out_button.style.display = '';
+    lights_out_button.style.display = 'none';
+    html.classList.add('end-game');
+    html.classList.add('my-victory');
   }
 }
 
@@ -772,11 +776,15 @@ let my_move = function(result){
     p_my.textContent = '';
     lights_out_button.removeEventListener('click',lights_out_listener);
     lights_out_button.style.display = '';
+    html.classList.add('end-game');
+    html.classList.add('enemys-victory');
   }else if(result == 'my victory'){
     p_enemys.textContent = '';
     p_my.textContent = 'WON';
     lights_out_button.removeEventListener('click',lights_out_listener);
     lights_out_button.style.display = '';
+    html.classList.add('end-game');
+    html.classList.add('my-victory');
   }
 }
 
