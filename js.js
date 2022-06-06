@@ -1,4 +1,17 @@
 let html = document.querySelector('html');
+let press_F5 = document.getElementById('press_F5');
+let lights_out_container = document.querySelector('.lights_out_container_inner');
+let lights_out_button = document.getElementById('lights_out_button');
+let deck_container = document.getElementById('deck_container_inner');
+let play_field_container = document.querySelector('.play_field_container');
+let my_cards_container = document.querySelector('.my_cards_container');
+let enemy_cards_container = document.querySelector('.enemy_cards_container');
+let p_my = document.getElementById('p_my');
+let p_enemys = document.getElementById('p_enemys');
+let template_my_card = document.getElementById('my_card_template');
+let template_play = document.getElementById('template-play-field');
+let press_F5_buttons = document.querySelectorAll('.press_F5_button');
+
 let hearts_importance=0;
 let squares_importance = 0;
 let leaves_importance = 0;
@@ -48,11 +61,11 @@ let cards_object = {
   queen_hearts:['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZsvIf-RV_yw0FKMW3nMdUe-u7s0xzXnylvXHQQrxOATaqoYR5bk2FQ_1Aq7os8uacWU0&usqp=CAU',7,'hearts'],
   queen_leaves:['https://i.pinimg.com/236x/3a/94/14/3a9414b746760a40ec53bb0dc7e8f179.jpg',7,'leaves'],
   queen_spears:['https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Queen_of_spades_en.svg/1200px-Queen_of_spades_en.svg.png',7,'spears'],
-  queen_squares:['https://thumbs.dreamstime.com/z/playing-card-queen-diamonds-isolated-white-playing-card-queen-diamonds-isolated-white-background-132849595.jpg',7,'squares'],
+  queen_squares:['https://media.istockphoto.com/vectors/queen-of-diamonds-vector-id165931594?b=1&k=20&m=165931594&s=170667a&w=0&h=9qLHBhwAbyYNiCRlu4CjsUyVNGFPzHicTMrG-QbkatQ=',7,'squares'],
   king_hearts:['https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Atlas_deck_king_of_hearts.svg/1200px-Atlas_deck_king_of_hearts.svg.png',8,'hearts'],
-  king_leaves:['https://image.shutterstock.com/z/stock-vector-poker-playing-card-king-club-312744614.jpg',8,'leaves'],
+  king_leaves:['https://i.pinimg.com/originals/12/f7/a4/12f7a4211bbbbae45ffa90de88e20b40.png',8,'leaves'],
   king_squares:['https://cdn3.vectorstock.com/i/1000x1000/73/57/poker-playing-card-king-diamond-vector-8697357.jpg',8,'squares'],
-  king_spears:['https://image.shutterstock.com/z/stock-vector-poker-playing-card-king-spade-312744596.jpg',8,'spears'],
+  king_spears:['https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Atlas_deck_king_of_spades.svg/800px-Atlas_deck_king_of_spades.svg.png',8,'spears'],
   ace_spears:['https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Ace_of_spades.svg/706px-Ace_of_spades.svg.png',9,'spears'],
   ace_hearts:['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn_y3kPW1ZBh4cXuuyW_DMwJMU0iIuOnPCTQHg-6rtQIvF-aWsNYoDgF1IO2PA7aU6fMM&usqp=CAU',9,'hearts'],
   ace_squares:['https://img.favpng.com/6/22/23/playing-card-ace-of-hearts-suit-ace-of-spades-png-favpng-2W0YEWWnFNHrHnWnH1guZP6SL.jpg',9,'squares'],
@@ -61,7 +74,6 @@ let cards_object = {
 let giving_cards = Object.values(cards_object);
 let deck_card_src = 'https://upload.wikimedia.org/wikipedia/commons/7/7d/Atlas_deck_card_back_green_and_dark_red.svg';
 let trump_array=[];
-let press_F5 = document.getElementById('press_F5');
 for(let i=0;i<Object.keys(cards_object).length;i++){
   if(Object.values(cards_object)[i][2] == choice_trump){
     Object.values(cards_object)[i][1] = Object.values(cards_object)[i][1] + 100;
@@ -72,9 +84,7 @@ for(let i=0;i<Object.keys(cards_object).length;i++){
 }
 
 let chosen_trump = 0;
-let lights_out_container = document.querySelector('.lights_out_container_inner');
-let lights_out_button = document.getElementById('lights_out_button');
-let deck_container = document.getElementById('deck_container_inner');
+
 let chosen_trump_index =0;
 console.log(trump_array);
 for(let i=0;i<Object.values(cards_object).length;i++){
@@ -104,11 +114,7 @@ let been_cards_array = [];
 console.log(been_cards_array);
 been_cards_array.push(chosen_trump_index);
 
-let play_field_container = document.querySelector('.play_field_container');
-let my_cards_container = document.querySelector('.my_cards_container');
-let enemy_cards_container = document.querySelector('.enemy_cards_container');
-let p_my = document.getElementById('p_my');
-let p_enemys = document.getElementById('p_enemys');
+
 console.log(Object.values(cards_object))
 
 function bubbleSort(arr) {
@@ -214,7 +220,6 @@ let shuffling_function = function(container){
 }
 
 
-let template_my_card = document.getElementById('my_card_template');
 let placing_my_cards = function(){
   if(deck_container.children.length>0){
     let quanity_placing_numbers = shuffling_function(my_cards_container);
@@ -478,7 +483,6 @@ let selecting_enemys_cards = function(){
     return futher_moves_enemy(enemy_worth_array,enemy_house_array, enemy_cards_inf);
   }
 }
-let template_play = document.getElementById('template-play-field');
 let clicked_card = 0;
 
 
@@ -497,12 +501,6 @@ let accept_listener  = function(){
   }
   my_cards_container.children[my_cards_container.children.length-1].remove();
 
-  // for(let i=0;i<play_field_container.children.length;i++){
-  //   play_field_container.children[i].remove();
-  // }
-  // for(let i=0;i<play_field_container.children.length;i++){
-  //   play_field_container.children[i].remove();
-  // }
   enemys_move('accept');
 }
 
@@ -811,15 +809,14 @@ if(flag_to_switch_move == true){
   my_move();
 }
 
-let press_F5_buttons = document.querySelectorAll('.press_F5_button');
 for(let i=0;i<press_F5_buttons.length;i++){
   press_F5_buttons[i].addEventListener('click', function(){
     location.reload();
   });
 }
 let entering_code = '';
-let succumb_code = '00010';
-let code_author = '200300';
+let succumb_code = '00010000';
+let code_author = '1000';
 for(let i=0;i<my_cards_container.children.length;i++){
   my_cards_container.children[i].addEventListener('click',function(){
     entering_code = entering_code + i;
