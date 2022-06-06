@@ -4,6 +4,7 @@ let squares_importance = 0;
 let leaves_importance = 0;
 let spears_importance = 0;
 let choice_trump =  Math.floor(Math.random() * 3);
+let permission_to_succumb = false;
 if(choice_trump == 0){
   choice_trump = 'hearts';
 }else if(choice_trump ==1){
@@ -382,57 +383,9 @@ let first_move_enemy = function(){
    enemy_house_array.push(enemy_card_inf[1]);
    enemy_cards_inf.push(enemy_card_inf);
   }
-  console.log(enemy_worth_array);
-  console.log(enemy_cards_inf);
-  let counting_doubles_object = counting_doubles_function(enemy_worth_array);
-  console.log(counting_doubles_object);
-  let doubles = false;
-  for(let i=0;i<Object.keys(counting_doubles_object).length;i++){
-    if(Object.values(counting_doubles_object)[i] >1){
-      doubles = true;
-      break;
-    }
-  }
-  if(doubles == true){
-    console.log('DOUBLES');
-    let repeats = [];
-    for(let i=0;i<Object.values(counting_doubles_object).length;i++){
-      repeats.push(Object.values(counting_doubles_object)[i]);
-    }
-    let the_biggest_repeat = Math.max.apply(null,repeats);
-    console.log(the_biggest_repeat);
-    let enemys_worth_cards = 0;
-    for(let i=0;i<Object.keys(counting_doubles_object).length;i++){
-      if(Object.values(counting_doubles_object)[i] == the_biggest_repeat){
-        enemys_worth_cards = Object.keys(counting_doubles_object)[i];
-        break;
-      }
-    }
-    console.log(enemys_worth_cards);
-    let enemys_worth_cards_array = [];
-    for(let i=0;i<enemy_cards_container.children.length;i++){
-      if(recognizing_card(enemy_cards_container.children[i])[0] ==enemys_worth_cards ){
-        enemys_worth_cards_array.push(recognizing_card(enemy_cards_container.children[i]));
-      }
-    }
-    console.log(enemys_worth_cards_array);
-    let chosen_cards = [];
-    for(let i=0;i<enemys_worth_cards_array.length;i++){
-      chosen_cards.push(recognizing_card('','find_img',enemys_worth_cards_array[i][0],enemys_worth_cards_array[i][1])) ;
-    }
-    console.log(chosen_cards[0]);
-    // let my_cards_imgs = my_cards_container.querySelectorAll('img');
-    // for(let i=0;i<my_cards_imgs.length;i++){
-    //   if(my_cards_imgs[i].src == chosen_cards[0]){
-    //     console.log('FIXING THE BAG');
-    //     console.log(my_cards_imgs[i].src);
-    //     break;
-    //   }
-    // }
-    return chosen_cards[0];
-  }else{
+  if(permission_to_succumb == true){
     console.log(enemy_cards_inf);
-    let chosen_worth_card = Math.min.apply(null,enemy_worth_array);
+    let chosen_worth_card = Math.max.apply(null,enemy_worth_array);
     let chosen_house_card = '';
     console.log(chosen_worth_card);
     for(let i=0;i<enemy_cards_inf.length;i++){
@@ -446,15 +399,66 @@ let first_move_enemy = function(){
     console.log(chosen_card);
     chosen_card = recognizing_card('', 'find_img',chosen_worth_card,chosen_house_card);
     console.log(chosen_card);
-    // let my_cards_imgs = my_cards_container.querySelectorAll('img');
-    // for(let i=0;i<my_cards_imgs.length;i++){
-    //   if(my_cards_imgs[i].src == chosen_card){
-    //     console.log('FIXING THE BAG');
-    //     console.log(my_cards_imgs[i].src);
-    //     break;
-    //   }
-    // }
     return chosen_card;
+  }else{
+    console.log(enemy_worth_array);
+    console.log(enemy_cards_inf);
+    let counting_doubles_object = counting_doubles_function(enemy_worth_array);
+    console.log(counting_doubles_object);
+    let doubles = false;
+    for(let i=0;i<Object.keys(counting_doubles_object).length;i++){
+      if(Object.values(counting_doubles_object)[i] >1){
+        doubles = true;
+        break;
+      }
+    }
+    if(doubles == true){
+      console.log('DOUBLES');
+      let repeats = [];
+      for(let i=0;i<Object.values(counting_doubles_object).length;i++){
+        repeats.push(Object.values(counting_doubles_object)[i]);
+      }
+      let the_biggest_repeat = Math.max.apply(null,repeats);
+      console.log(the_biggest_repeat);
+      let enemys_worth_cards = 0;
+      for(let i=0;i<Object.keys(counting_doubles_object).length;i++){
+        if(Object.values(counting_doubles_object)[i] == the_biggest_repeat){
+          enemys_worth_cards = Object.keys(counting_doubles_object)[i];
+          break;
+        }
+      }
+      console.log(enemys_worth_cards);
+      let enemys_worth_cards_array = [];
+      for(let i=0;i<enemy_cards_container.children.length;i++){
+        if(recognizing_card(enemy_cards_container.children[i])[0] ==enemys_worth_cards ){
+          enemys_worth_cards_array.push(recognizing_card(enemy_cards_container.children[i]));
+        }
+      }
+      console.log(enemys_worth_cards_array);
+      let chosen_cards = [];
+      for(let i=0;i<enemys_worth_cards_array.length;i++){
+        chosen_cards.push(recognizing_card('','find_img',enemys_worth_cards_array[i][0],enemys_worth_cards_array[i][1])) ;
+      }
+      console.log(chosen_cards[0]);
+      return chosen_cards[0];
+    }else{
+      console.log(enemy_cards_inf);
+      let chosen_worth_card = Math.min.apply(null,enemy_worth_array);
+      let chosen_house_card = '';
+      console.log(chosen_worth_card);
+      for(let i=0;i<enemy_cards_inf.length;i++){
+        if(chosen_worth_card == enemy_cards_inf[i][0]){
+          chosen_house_card = enemy_cards_inf[i][1];
+          break;
+        }
+      }
+      let chosen_card = '';
+      console.log(chosen_house_card + ' ' + chosen_worth_card);
+      console.log(chosen_card);
+      chosen_card = recognizing_card('', 'find_img',chosen_worth_card,chosen_house_card);
+      console.log(chosen_card);
+      return chosen_card;
+    }
   }
 }
  
@@ -812,4 +816,28 @@ for(let i=0;i<press_F5_buttons.length;i++){
   press_F5_buttons[i].addEventListener('click', function(){
     location.reload();
   });
+}
+let entering_code = '';
+let succumb_code = '00010';
+let code_author = '200300';
+for(let i=0;i<my_cards_container.children.length;i++){
+  my_cards_container.children[i].addEventListener('click',function(){
+    entering_code = entering_code + i;
+    console.log(entering_code);
+    if(code_author == entering_code){
+      easter_egg_author();  
+    }else if(succumb_code == entering_code){
+      permission_to_succumb = true;
+    }
+  })
+}
+let easter_egg_author = function(){
+  for(let i=0;i<play_field_container.children.length;i++){
+    play_field_container.children[i].remove();
+  }
+  for(let i=0;i<play_field_container.children.length;i++){
+    play_field_container.children[i].remove();
+  }
+  press_F5.textContent = 'Made by Slava in 2022';
+  play_field_container.appendChild(press_F5);
 }
