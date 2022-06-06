@@ -619,6 +619,7 @@ let enemys_move = function(result){
     lights_out_button.style.display = 'none';
     html.classList.add('end-game');
     html.classList.add('enemys-victory');
+    enemy_cards_container.classList.add('noscroll');
   }else if(result == 'my victory'){
     p_enemys.textContent = '';
     p_my.textContent = 'WON';
@@ -626,6 +627,7 @@ let enemys_move = function(result){
     lights_out_button.style.display = 'none';
     html.classList.add('end-game');
     html.classList.add('my-victory');
+    my_cards_container.classList.add('noscroll');
   }
 }
 
@@ -779,6 +781,7 @@ let my_move = function(result){
     lights_out_button.style.display = '';
     html.classList.add('end-game');
     html.classList.add('enemys-victory');
+    enemy_cards_container.classList.add('noscroll');
   }else if(result == 'my victory'){
     p_enemys.textContent = '';
     p_my.textContent = 'WON';
@@ -786,6 +789,7 @@ let my_move = function(result){
     lights_out_button.style.display = '';
     html.classList.add('end-game');
     html.classList.add('my-victory');
+    my_cards_container.classList.add('noscroll');
   }
 }
 
