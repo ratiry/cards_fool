@@ -17,7 +17,6 @@ let squares_importance = 0;
 let leaves_importance = 0;
 let spears_importance = 0;
 let choice_trump =  Math.floor(Math.random() * 3);
-let permission_to_succumb = false;
 if(choice_trump == 0){
   choice_trump = 'hearts';
 }else if(choice_trump ==1){
@@ -57,19 +56,19 @@ let cards_object = {
   jack_leaves:['https://media.istockphoto.com/vectors/poker-playing-card-jack-club-new-design-of-playing-cards-vector-id1277184951?k=20&m=1277184951&s=170667a&w=0&h=372MSwHgxGHwgX8JC50yAlEZni7FgUpzwk7u4HBEyog=',6,'leaves'],
   jack_spears:['https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/English_pattern_jack_of_spades.svg/360px-English_pattern_jack_of_spades.svg.png',6,'spears'],
   jack_hearts:['https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/English_pattern_jack_of_hearts.svg/360px-English_pattern_jack_of_hearts.svg.png',6,'hearts'],
-  jack_squares:['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfFUt9PAJLD97o-6sRYA-trP_qtEQjuqKL9A1JAcJpVPQS1lJIa60L0hftBwI4OrklORw&usqp=CAU',6,'squares'],
+  jack_squares:['https://thumb.mp-farm.com/79698471/preview.jpg',6,'squares'],
   queen_hearts:['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZsvIf-RV_yw0FKMW3nMdUe-u7s0xzXnylvXHQQrxOATaqoYR5bk2FQ_1Aq7os8uacWU0&usqp=CAU',7,'hearts'],
   queen_leaves:['https://i.pinimg.com/236x/3a/94/14/3a9414b746760a40ec53bb0dc7e8f179.jpg',7,'leaves'],
   queen_spears:['https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Queen_of_spades_en.svg/1200px-Queen_of_spades_en.svg.png',7,'spears'],
   queen_squares:['https://media.istockphoto.com/vectors/queen-of-diamonds-vector-id165931594?b=1&k=20&m=165931594&s=170667a&w=0&h=9qLHBhwAbyYNiCRlu4CjsUyVNGFPzHicTMrG-QbkatQ=',7,'squares'],
   king_hearts:['https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Atlas_deck_king_of_hearts.svg/1200px-Atlas_deck_king_of_hearts.svg.png',8,'hearts'],
   king_leaves:['https://i.pinimg.com/originals/12/f7/a4/12f7a4211bbbbae45ffa90de88e20b40.png',8,'leaves'],
-  king_squares:['https://cdn3.vectorstock.com/i/1000x1000/73/57/poker-playing-card-king-diamond-vector-8697357.jpg',8,'squares'],
+  king_squares:['https://media.istockphoto.com/vectors/king-of-diamonds-two-playing-card-vector-id165558074?k=20&m=165558074&s=612x612&w=0&h=xTrhPT9rbgdjN8M3Hmd-DgLU_JiItrBb8dSFyPTvx-4=',8,'squares'],
   king_spears:['https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Atlas_deck_king_of_spades.svg/800px-Atlas_deck_king_of_spades.svg.png',8,'spears'],
   ace_spears:['https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Ace_of_spades.svg/706px-Ace_of_spades.svg.png',9,'spears'],
   ace_hearts:['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn_y3kPW1ZBh4cXuuyW_DMwJMU0iIuOnPCTQHg-6rtQIvF-aWsNYoDgF1IO2PA7aU6fMM&usqp=CAU',9,'hearts'],
   ace_squares:['https://img.favpng.com/6/22/23/playing-card-ace-of-hearts-suit-ace-of-spades-png-favpng-2W0YEWWnFNHrHnWnH1guZP6SL.jpg',9,'squares'],
-  ace_leaves:['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjHPvnlVXx8td3ltqIgmrLs7wCdmUD5cWHzw&usqp=CAU',9,'leaves']
+  ace_leaves:['https://i.pinimg.com/originals/17/ca/9f/17ca9f77b395a41c6d45cbff350573bb.png',9,'leaves']
 }
 let giving_cards = Object.values(cards_object);
 let deck_card_src = 'https://upload.wikimedia.org/wikipedia/commons/7/7d/Atlas_deck_card_back_green_and_dark_red.svg';
@@ -132,7 +131,6 @@ function bubbleSort(arr) {
   }
   return arr;
 }
-
 
 
 let seeking_for_repeats_function = function(was_card,giving_card){
@@ -388,9 +386,49 @@ let first_move_enemy = function(){
    enemy_house_array.push(enemy_card_inf[1]);
    enemy_cards_inf.push(enemy_card_inf);
   }
-  if(permission_to_succumb == true){
+  console.log(enemy_worth_array);
+  console.log(enemy_cards_inf);
+  let counting_doubles_object = counting_doubles_function(enemy_worth_array);
+  console.log(counting_doubles_object);
+  let doubles = false;
+  for(let i=0;i<Object.keys(counting_doubles_object).length;i++){
+    if(Object.values(counting_doubles_object)[i] >1){
+      doubles = true;
+      break;
+    }
+  }
+  if(doubles == true){
+    console.log('DOUBLES');
+    let repeats = [];
+    for(let i=0;i<Object.values(counting_doubles_object).length;i++){
+      repeats.push(Object.values(counting_doubles_object)[i]);
+    }
+    let the_biggest_repeat = Math.max.apply(null,repeats);
+    console.log(the_biggest_repeat);
+    let enemys_worth_cards = 0;
+    for(let i=0;i<Object.keys(counting_doubles_object).length;i++){
+      if(Object.values(counting_doubles_object)[i] == the_biggest_repeat){
+        enemys_worth_cards = Object.keys(counting_doubles_object)[i];
+        break;
+      }
+    }
+    console.log(enemys_worth_cards);
+    let enemys_worth_cards_array = [];
+    for(let i=0;i<enemy_cards_container.children.length;i++){
+      if(recognizing_card(enemy_cards_container.children[i])[0] ==enemys_worth_cards ){
+        enemys_worth_cards_array.push(recognizing_card(enemy_cards_container.children[i]));
+      }
+    }
+    console.log(enemys_worth_cards_array);
+    let chosen_cards = [];
+    for(let i=0;i<enemys_worth_cards_array.length;i++){
+      chosen_cards.push(recognizing_card('','find_img',enemys_worth_cards_array[i][0],enemys_worth_cards_array[i][1])) ;
+    }
+    console.log(chosen_cards[0]);
+    return chosen_cards[0];
+  }else{
     console.log(enemy_cards_inf);
-    let chosen_worth_card = Math.max.apply(null,enemy_worth_array);
+    let chosen_worth_card = Math.min.apply(null,enemy_worth_array);
     let chosen_house_card = '';
     console.log(chosen_worth_card);
     for(let i=0;i<enemy_cards_inf.length;i++){
@@ -405,67 +443,9 @@ let first_move_enemy = function(){
     chosen_card = recognizing_card('', 'find_img',chosen_worth_card,chosen_house_card);
     console.log(chosen_card);
     return chosen_card;
-  }else{
-    console.log(enemy_worth_array);
-    console.log(enemy_cards_inf);
-    let counting_doubles_object = counting_doubles_function(enemy_worth_array);
-    console.log(counting_doubles_object);
-    let doubles = false;
-    for(let i=0;i<Object.keys(counting_doubles_object).length;i++){
-      if(Object.values(counting_doubles_object)[i] >1){
-        doubles = true;
-        break;
-      }
-    }
-    if(doubles == true){
-      console.log('DOUBLES');
-      let repeats = [];
-      for(let i=0;i<Object.values(counting_doubles_object).length;i++){
-        repeats.push(Object.values(counting_doubles_object)[i]);
-      }
-      let the_biggest_repeat = Math.max.apply(null,repeats);
-      console.log(the_biggest_repeat);
-      let enemys_worth_cards = 0;
-      for(let i=0;i<Object.keys(counting_doubles_object).length;i++){
-        if(Object.values(counting_doubles_object)[i] == the_biggest_repeat){
-          enemys_worth_cards = Object.keys(counting_doubles_object)[i];
-          break;
-        }
-      }
-      console.log(enemys_worth_cards);
-      let enemys_worth_cards_array = [];
-      for(let i=0;i<enemy_cards_container.children.length;i++){
-        if(recognizing_card(enemy_cards_container.children[i])[0] ==enemys_worth_cards ){
-          enemys_worth_cards_array.push(recognizing_card(enemy_cards_container.children[i]));
-        }
-      }
-      console.log(enemys_worth_cards_array);
-      let chosen_cards = [];
-      for(let i=0;i<enemys_worth_cards_array.length;i++){
-        chosen_cards.push(recognizing_card('','find_img',enemys_worth_cards_array[i][0],enemys_worth_cards_array[i][1])) ;
-      }
-      console.log(chosen_cards[0]);
-      return chosen_cards[0];
-    }else{
-      console.log(enemy_cards_inf);
-      let chosen_worth_card = Math.min.apply(null,enemy_worth_array);
-      let chosen_house_card = '';
-      console.log(chosen_worth_card);
-      for(let i=0;i<enemy_cards_inf.length;i++){
-        if(chosen_worth_card == enemy_cards_inf[i][0]){
-          chosen_house_card = enemy_cards_inf[i][1];
-          break;
-        }
-      }
-      let chosen_card = '';
-      console.log(chosen_house_card + ' ' + chosen_worth_card);
-      console.log(chosen_card);
-      chosen_card = recognizing_card('', 'find_img',chosen_worth_card,chosen_house_card);
-      console.log(chosen_card);
-      return chosen_card;
-    }
   }
 }
+
  
 let selecting_enemys_cards = function(){
   let enemy_worth_array = [];
@@ -588,9 +568,7 @@ let enemys_move = function(result){
   p_my.textContent = '';
   if(result !== 'victory' & result !== 'my victory'){
     if(result == 'lights_out'){
-      lights_out_function();
-      placing_enemy_cards();
-      placing_my_cards(); 
+      setTimeout(() => {lights_out_function();placing_enemy_cards();placing_my_cards(); }, 1000);
       for(let i=0;i<my_cards_container.children.length;i++){
         my_cards_container.children[i].removeEventListener('click',my_response);
       }
@@ -763,9 +741,7 @@ let my_move = function(result){
       p_my.textContent = 'moves';
     if(result == 'accept'){
       console.log('accept');
-      accept_function();
-      placing_my_cards();
-      placing_enemy_cards();
+      setTimeout(() => {accept_function(); placing_my_cards();placing_enemy_cards(); }, 1000);
     }
     
     for(let i=0;i<my_cards_container.children.length;i++){
@@ -813,28 +789,4 @@ for(let i=0;i<press_F5_buttons.length;i++){
   press_F5_buttons[i].addEventListener('click', function(){
     location.reload();
   });
-}
-let entering_code = '';
-let succumb_code = '00010000';
-let code_author = '1000';
-for(let i=0;i<my_cards_container.children.length;i++){
-  my_cards_container.children[i].addEventListener('click',function(){
-    entering_code = entering_code + i;
-    console.log(entering_code);
-    if(code_author == entering_code){
-      easter_egg_author();  
-    }else if(succumb_code == entering_code){
-      permission_to_succumb = true;
-    }
-  })
-}
-let easter_egg_author = function(){
-  for(let i=0;i<play_field_container.children.length;i++){
-    play_field_container.children[i].remove();
-  }
-  for(let i=0;i<play_field_container.children.length;i++){
-    play_field_container.children[i].remove();
-  }
-  press_F5.textContent = 'Made by Slava in 2022';
-  play_field_container.appendChild(press_F5);
 }

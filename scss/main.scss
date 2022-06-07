@@ -28,6 +28,7 @@
           background:black;
         }
       }
+
       &.noscroll{
         overflow:hidden !important;
       }
@@ -218,3 +219,19 @@ html.end-game.my-victory{
     opacity:1;
   }
 }
+// .cards_section{
+//   position:relative;
+//   &::after{
+//     content:'';
+//     display:block;
+//     background-image:url(https://upload.wikimedia.org/wikipedia/commons/7/7d/Atlas_deck_card_back_green_and_dark_red.svg);
+//     width:100px;
+//     height:100px;
+//     position: absolute;
+//     top: 0;
+//     left: 50%;
+//     transform: translateX(-50%);
+//     background-size: cover;
+//     background-position: center;
+//   }
+// }
