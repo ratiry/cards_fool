@@ -588,15 +588,17 @@ let enemys_move = function(result){
   p_my.textContent = '';
   if(result !== 'victory' & result !== 'my victory'){
     if(result == 'lights_out'){
-      lights_out_function();
-      placing_enemy_cards();
-      placing_my_cards(); 
-      for(let i=0;i<my_cards_container.children.length;i++){
-        my_cards_container.children[i].removeEventListener('click',my_response);
-      }
-      lights_out_button.style.display = 'none';
-      lights_out_button.removeEventListener('click',accept_listener);
-      return my_move();
+      setTimeout(() => {   
+        lights_out_function();
+        placing_enemy_cards();
+        placing_my_cards(); 
+        for(let i=0;i<my_cards_container.children.length;i++){
+          my_cards_container.children[i].removeEventListener('click',my_response);
+        }
+        lights_out_button.style.display = 'none';
+        lights_out_button.removeEventListener('click',accept_listener);
+        return my_move();
+      }, 1000);
     }else if(result != 'accept'){
       selecting_enemys_cards();
       let selected_enemy_card = selecting_enemys_cards();
@@ -763,18 +765,22 @@ let my_move = function(result){
       p_my.textContent = 'moves';
     if(result == 'accept'){
       console.log('accept');
-      accept_function();
-      placing_my_cards();
-      placing_enemy_cards();
+      setTimeout(() => {   
+        accept_function();
+        placing_my_cards();
+        placing_enemy_cards();
+        return my_move();
+      }, 1000);
+    }else{
+      for(let i=0;i<my_cards_container.children.length;i++){
+        my_cards_container.children[i].addEventListener('click',my_move_listener);
+      }
+      lights_out_button.addEventListener('click',lights_out_listener);
+      lights_out_button.textContent = 'lights out';
+      lights_out_button.style.display = 'block';
     }
     
-    for(let i=0;i<my_cards_container.children.length;i++){
-      my_cards_container.children[i].addEventListener('click',my_move_listener);
-    }
-    lights_out_button.addEventListener('click',lights_out_listener);
-    lights_out_button.textContent = 'lights out';
-    lights_out_button.style.display = 'block';
-    }
+  }
     
   }else if(result == 'enemys victory'){
     p_enemys.textContent = 'WON';
