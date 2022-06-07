@@ -84,15 +84,18 @@
 }
 .cards_section .play_field_container .play_cards_set {
   position: relative;
+  margin-right: 5px;
 }
 .cards_section .play_field_container .play_cards_set .to-beated-card {
   position: absolute;
   position: absolute;
   left: 0px;
   bottom: 35px;
+  display: none;
 }
 .cards_section .play_field_container .play_cards_set img {
   height: 150px;
+  width: 100px;
 }
 .cards_section .lights_out_container {
   position: relative;

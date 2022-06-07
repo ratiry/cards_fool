@@ -558,11 +558,13 @@ let my_response = function(event){
     button_response_card.remove();
     if(my_cards_container.children.length ==0){
       let beated_card = last_set_cards.querySelector('.to-beated-card');
+      beated_card.style.display = 'block';
       beated_card.src = response_card.src; 
       enemys_move('my victory');
     }else{
       let beated_card = last_set_cards.querySelector('.to-beated-card');
       beated_card.src = response_card.src; 
+      beated_card.style.display = 'block';
       for(let i=0;i<my_cards_container.children.length;i++){
         my_cards_container.children[i].removeEventListener('click',my_response);
       }
@@ -669,6 +671,7 @@ let enemys_response = function(){
     }
     console.log(chosen_card_src);
     let to_beated_card = play_set.querySelector('.to-beated-card');
+    to_beated_card.style.display = 'block';
     console.log(to_beated_card);
     to_beated_card.src =chosen_card_src; 
     for(let i=0;i<enemy_cards_container.children.length;i++){

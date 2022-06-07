@@ -90,15 +90,17 @@
     align-items:center;
     .play_cards_set{
       position:relative;
-
+      margin-right:5px;
       .to-beated-card{
         position:absolute;
         position: absolute;
         left: 0px;
         bottom: 35px;
+        display:none;
       }
       img{
         height:150px;
+        width:100px;
       }
     }
   }
