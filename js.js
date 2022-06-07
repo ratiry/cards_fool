@@ -134,7 +134,36 @@ function bubbleSort(arr) {
 }
 
 
-
+let recognizing_card = function(card,button, worth, house){
+  if(button == 'button'){
+    let card_img = card.querySelector('img');
+    for(let i=0;i<Object.values(cards_object).length;i++){
+      if(Object.values(cards_object)[i][0] == card_img.src){
+        let card_inf =[]; 
+        card_inf.push(Object.values(cards_object)[i][1]);
+        card_inf.push(Object.values(cards_object)[i][2]);
+        return card_inf;
+      }
+    }
+  }else if(button != 'find_img'){
+    for(let i=0;i<Object.values(cards_object).length;i++){
+      if(Object.values(cards_object)[i][0] == card.src){
+        let card_inf =[]; 
+        card_inf.push(Object.values(cards_object)[i][1]);
+        card_inf.push(Object.values(cards_object)[i][2]);
+        card_inf.push(Object.values(cards_object)[i][0]);
+        return card_inf;
+      }
+    }
+  }else if(button == 'find_img'){
+    console.log(worth + ' ' + house);
+    for(let i=0;i<Object.values(cards_object).length;i++){
+      if(Object.values(cards_object)[i][1] == worth & Object.values(cards_object)[i][2] == house){
+        return Object.values(cards_object)[i][0];
+      }
+    }
+  }
+} 
 let seeking_for_repeats_function = function(was_card,giving_card){
   for(let ii=0;ii<been_cards_array.length;ii++){
     if(giving_card ==been_cards_array[ii]){
@@ -219,33 +248,62 @@ let shuffling_function = function(container){
 
 }
 
+function sorting_cards(container) {
+  let arr = [];
+  let my_cards_imgs = container.querySelectorAll('img');
+  let my_cards_inf = [];
+  for(let i=0;i<my_cards_imgs.length;i++){
+    arr.push(recognizing_card(my_cards_imgs[i])[0]);
+    my_cards_inf.push(recognizing_card(my_cards_imgs[i]));
+  }
+  for (var i = 0, endI = arr.length - 1; i < endI; i++) {
+      for (var j = 0, endJ = endI - i; j < endJ; j++) {
+          if (arr[j] > arr[j + 1]) {
+              var swap = arr[j];
+              arr[j] = arr[j + 1];
+              arr[j + 1] = swap;
+          }
+      }
+  }
+  for(let i=0;i<arr.length;i++){
+    for(let ii=0;ii<my_cards_inf.length;ii++){
+      if(arr[i] == my_cards_inf[ii][0]){
+        my_cards_imgs[i].src = my_cards_inf[ii][2];
+        my_cards_inf.splice(ii,1);
+        break;
+      }
+    }
+  }
+  return arr;
+}
 
 let placing_my_cards = function(){
   if(deck_container.children.length>0){
     let quanity_placing_numbers = shuffling_function(my_cards_container);
-  for(let i=0;i<quanity_placing_numbers.length;i++){
-    let my_new_card = template_my_card.cloneNode(true).content;
-    let my_new_card_img =my_new_card.querySelector('img');
-    my_new_card_img.src = quanity_placing_numbers[i][0];
-    my_cards_container.appendChild(my_new_card);
-    if(quanity_placing_numbers[i][2] ==choice_badge_trump){
-      my_trump_importance_array.push(quanity_placing_numbers[i][1]);
-      console.log(quanity_placing_numbers[i][1])
-    }
-  }
-
-  if(deck_container.children.length>quanity_placing_numbers.length){
-    for(let i=quanity_placing_numbers.length;i>0;i--){
-      deck_container.children[i].remove();
-      } 
-  }else{
-    for(let ii=0;ii<5;ii++){
-      for(let i=0;i<deck_container.children.length;i++){
-        deck_container.children[i].remove();
+    for(let i=0;i<quanity_placing_numbers.length;i++){
+      let my_new_card = template_my_card.cloneNode(true).content;
+      let my_new_card_img =my_new_card.querySelector('img');
+      my_new_card_img.src = quanity_placing_numbers[i][0];
+      my_cards_container.appendChild(my_new_card);
+      if(quanity_placing_numbers[i][2] ==choice_badge_trump){
+        my_trump_importance_array.push(quanity_placing_numbers[i][1]);
+        console.log(quanity_placing_numbers[i][1])
       }
     }
+
+    if(deck_container.children.length>quanity_placing_numbers.length){
+      for(let i=quanity_placing_numbers.length;i>0;i--){
+        deck_container.children[i].remove();
+        } 
+    }else{
+        for(let ii=0;ii<5;ii++){
+          for(let i=0;i<deck_container.children.length;i++){
+            deck_container.children[i].remove();
+          }
+        }
+      }
   }
-  }
+  sorting_cards(my_cards_container);
 }
 placing_my_cards();
 let placing_enemy_cards = function(){
@@ -271,6 +329,7 @@ let placing_enemy_cards = function(){
       }
     }
   }
+  sorting_cards(enemy_cards_container);
 }
 placing_enemy_cards();
 let whose_turn = '';
@@ -306,36 +365,6 @@ for (var i = 0; i < array.length; i++)
 let count_for_clicking = 0;
 
 
-let recognizing_card = function(card,button, worth, house){
-  if(button == 'button'){
-    let card_img = card.querySelector('img');
-    for(let i=0;i<Object.values(cards_object).length;i++){
-      if(Object.values(cards_object)[i][0] == card_img.src){
-        let card_inf =[]; 
-        card_inf.push(Object.values(cards_object)[i][1]);
-        card_inf.push(Object.values(cards_object)[i][2]);
-        return card_inf;
-      }
-    }
-  }else if(button != 'find_img'){
-    for(let i=0;i<Object.values(cards_object).length;i++){
-      if(Object.values(cards_object)[i][0] == card.src){
-        let card_inf =[]; 
-        card_inf.push(Object.values(cards_object)[i][1]);
-        card_inf.push(Object.values(cards_object)[i][2]);
-        card_inf.push(Object.values(cards_object)[i][0]);
-        return card_inf;
-      }
-    }
-  }else if(button == 'find_img'){
-    console.log(worth + ' ' + house);
-    for(let i=0;i<Object.values(cards_object).length;i++){
-      if(Object.values(cards_object)[i][1] == worth & Object.values(cards_object)[i][2] == house){
-        return Object.values(cards_object)[i][0];
-      }
-    }
-  }
-} 
 
 
 
