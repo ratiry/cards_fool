@@ -5,7 +5,7 @@
   height:100vh;
   background-image:url(https://media.istockphoto.com/photos/empty-green-casino-poker-table-cloth-with-spotlight-picture-id1092139474?k=20&m=1092139474&s=612x612&w=0&h=iWwvolq21sBzJZkqmigkdwNW6_cuQ1pQSNQmBE0a4V0=);
   background-size:100%;
-  // position:relative;
+  position:relative;
   .playing_cards_container{
     flex-basis:60%;
     display:flex;
@@ -109,17 +109,32 @@
     flex-basis:20%;
     display:flex;
     flex-direction:column;
-    justify-content:center;
+    justify-content:space-between;
     .lights_out_container_inner{
       position:relative;
       display:flex;
+      margin-top:10px;
       img{
         height: 150px;
         margin-right: -95px;
       }
     }
-    button{
-      display:none;
+    .lights_out_wrapper{
+      align-self: center;
+      transform: translateY(-300%);
+      button{
+        display:none;
+        text-transform:uppercase;
+        background: yellow;
+        color: black;
+        font-weight: bold;
+        border-radius: 26px;
+        width:120px ;
+        transition:all 0.2s linear;
+        &:hover{
+          transform:scale(1.2);
+        }
+      }
     }
   }
 }
