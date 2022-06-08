@@ -629,7 +629,7 @@ let enemys_move = function(result){
         lights_out_button.style.display = 'none';
         lights_out_button.removeEventListener('click',accept_listener);
         return my_move();
-      }, 1000);
+      }, 500);
     }else if(result != 'accept'){
       selecting_enemys_cards();
       let selected_enemy_card = selecting_enemys_cards();
@@ -651,15 +651,17 @@ let enemys_move = function(result){
   }else if(result == 'victory'){
     p_enemys.textContent = 'WON';
     lights_out_button.removeEventListener('click',accept_listener);
-    lights_out_button.style.display = 'none';
-    html.classList.add('end-game');
-    html.classList.add('enemys-victory');
+    lights_out_button.remove();
     enemy_cards_container.classList.add('noscroll');
+    setTimeout(() => {  
+      html.classList.add('end-game');
+      html.classList.add('enemys-victory');
+    }, 500);
   }else if(result == 'my victory'){
     p_enemys.textContent = '';
     p_my.textContent = 'WON';
     lights_out_button.removeEventListener('click',accept_listener);
-    lights_out_button.style.display = 'none';
+    lights_out_button.remove();
     html.classList.add('end-game');
     html.classList.add('my-victory');
     my_cards_container.classList.add('noscroll');
@@ -802,7 +804,7 @@ let my_move = function(result){
         placing_my_cards();
         placing_enemy_cards();
         return my_move();
-      }, 1000);
+      }, 500);
     }else{
       for(let i=0;i<my_cards_container.children.length;i++){
         my_cards_container.children[i].addEventListener('click',my_move_listener);
@@ -815,18 +817,21 @@ let my_move = function(result){
   }
     
   }else if(result == 'enemys victory'){
+
     p_enemys.textContent = 'WON';
     p_my.textContent = '';
     lights_out_button.removeEventListener('click',lights_out_listener);
-    lights_out_button.style.display = '';
-    html.classList.add('end-game');
-    html.classList.add('enemys-victory');
+    lights_out_button.remove();
     enemy_cards_container.classList.add('noscroll');
+    setTimeout(() => {  
+      html.classList.add('end-game');
+      html.classList.add('enemys-victory');
+    }, 500);
   }else if(result == 'my victory'){
     p_enemys.textContent = '';
     p_my.textContent = 'WON';
     lights_out_button.removeEventListener('click',lights_out_listener);
-    lights_out_button.style.display = '';
+    lights_out_button.remove();
     html.classList.add('end-game');
     html.classList.add('my-victory');
     my_cards_container.classList.add('noscroll');
