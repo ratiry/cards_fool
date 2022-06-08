@@ -116,7 +116,8 @@
 }
 .cards_section .lights_out_container .lights_out_wrapper {
   align-self: center;
-  transform: translateY(-300%);
+  margin-bottom: 80px;
+  transform-origin: 50%;
 }
 .cards_section .lights_out_container .lights_out_wrapper button {
   display: none;
@@ -224,5 +225,20 @@ html.end-game.my-victory .end-game-popup.victory {
   transform: scale(1) translateY(-50%) translateX(-50%);
   visibility: visible;
   opacity: 1;
+}
+
+@keyframes pulsing_lights_out_button_animation {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.2);
+  }
+}
+.pulsing_lights_out_button {
+  animation-name: pulsing_lights_out_button_animation;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
 /*# sourceMappingURL=main.css.map */
