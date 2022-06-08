@@ -792,6 +792,8 @@ let accept_function = function(){
   enemy_cards_container.children[enemy_cards_container.children.length-1].remove();
 }
 let my_move = function(result){
+  lights_out_button.removeEventListener('click',lights_out_listener);
+  lights_out_button.style.display = 'none';
   if(result !== 'my victory' & result !== 'enemys victory'){
     if(result == 'lights_out'){
       for(let i=0;i<my_cards_container.children.length;i++){
