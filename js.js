@@ -705,6 +705,11 @@ let enemys_response = function(){
     to_beated_card.style.display = 'block';
     console.log(to_beated_card);
     to_beated_card.src =chosen_card_src; 
+    if(play_field_container.children.length >0){
+      lights_out_button.addEventListener('click',lights_out_listener);
+      lights_out_button.textContent = 'lights out';
+      lights_out_button.style.display = 'block';
+    }
     for(let i=0;i<enemy_cards_container.children.length;i++){
       if(enemy_cards_container.children[i].src == chosen_card_src){
         enemy_cards_container.children[i].remove();
@@ -809,9 +814,11 @@ let my_move = function(result){
       for(let i=0;i<my_cards_container.children.length;i++){
         my_cards_container.children[i].addEventListener('click',my_move_listener);
       }
-      lights_out_button.addEventListener('click',lights_out_listener);
-      lights_out_button.textContent = 'lights out';
-      lights_out_button.style.display = 'block';
+      // if(play_field_container.children.length >0){
+      //   lights_out_button.addEventListener('click',lights_out_listener);
+      //   lights_out_button.textContent = 'lights out';
+      //   lights_out_button.style.display = 'block';
+      // }
     }
     
   }
