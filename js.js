@@ -376,7 +376,7 @@ let futher_moves_enemy = function(enemy_worth_array,enemy_house_array,enemy_card
   for(let i=0;i<play_field_imgs.length;i++){
     play_field_imgs_inf.push(recognizing_card(play_field_imgs[i]));
   }
-  for(let i=0;i<play_field_imgs_inf.length;i++){
+  for(let i=0;i<play_field_imgs_inf.length;i++){// fix the bag with ace leaves
     console.log(play_field_imgs_inf[i]);
     for(let ii=0;ii<enemy_worth_array.length;ii++){
       console.log(enemy_worth_array[ii]);
@@ -580,6 +580,18 @@ let my_response = function(event){
   let beat_card = last_set_cards.querySelector('.beat-card');
   let beat_card_inf = recognizing_card(beat_card);
   let response_card_inf = recognizing_card(response_card);
+  let restriction_to_pulsing = false;
+  let my_cards_imgs = my_cards_container.querySelectorAll('img');
+  for(let i=0;i<my_cards_imgs.length;i++){
+    let my_card_inf = recognizing_card(my_cards_imgs[i]);
+    console.log(my_card_inf);
+    if(permitting_to_beat(my_card_inf,beat_card_inf)){
+      restriction_to_pulsing = true;
+    }
+  }
+  if(restriction_to_pulsing == false){
+    lights_out_button.parentElement.classList.add('pulsing_lights_out_button');
+  }
   if(permitting_to_beat(response_card_inf,beat_card_inf)){
     console.log('RESPOND');
     console.log(response_card);
@@ -615,6 +627,7 @@ let lights_out_function = function(){
 
 
 let enemys_move = function(result){
+  lights_out_button.parentElement.classList.remove('pulsing_lights_out_button');
   p_enemys.textContent = 'moves';
   p_my.textContent = '';
   if(result !== 'victory' & result !== 'my victory'){
@@ -716,6 +729,22 @@ let enemys_response = function(){
         break;
       }
     }
+    let my_cards_imgs = my_cards_container.querySelectorAll('img');
+    let play_field_imgs = play_field_container.querySelectorAll('img');
+    let restriction_to_pulsing = false;
+    for(let i=0;i<my_cards_imgs.length;i++){
+      let my_card_inf = recognizing_card(my_cards_imgs[i]);
+      for(let ii=0;ii<play_field_imgs.length;ii++){
+        let play_field_img_inf = recognizing_card(play_field_imgs[ii]);
+        if(play_field_img_inf[0] == my_card_inf[0] || play_field_img_inf[0] -100== my_card_inf[0] ||play_field_img_inf[0]== my_card_inf[0] -100){
+          restriction_to_pulsing = true;
+          break;
+        }
+      }
+    }
+    if(restriction_to_pulsing == false){
+      lights_out_button.parentElement.classList.add('pulsing_lights_out_button');
+    }
     if(enemy_cards_container.children.length ==0){
       my_move('enemys victory');
     }
@@ -757,6 +786,7 @@ let my_move_listener = function(event){
         break;
       }
     }
+
     if(permission_to_give == true){
     let play_set_beat_img = play_set.querySelector('.beat-card');
     card.parentElement.remove();
@@ -777,6 +807,7 @@ let lights_out_listener = function(){
   placing_my_cards();
   placing_enemy_cards();
   lights_out_button.removeEventListener('click',lights_out_listener);
+  lights_out_button.parentElement.classList.remove('pulsing_lights_out_button');
   lights_out_button.style.display = 'none';
   my_move('lights_out');
 }
@@ -794,6 +825,7 @@ let accept_function = function(){
 let my_move = function(result){
   lights_out_button.removeEventListener('click',lights_out_listener);
   lights_out_button.style.display = 'none';
+  lights_out_button.parentElement.classList.remove('pulsing_lights_out_button');
   if(result !== 'my victory' & result !== 'enemys victory'){
     if(result == 'lights_out'){
       for(let i=0;i<my_cards_container.children.length;i++){
@@ -805,6 +837,9 @@ let my_move = function(result){
       p_enemys.textContent = '';
       p_my.textContent = 'moves';
     if(result == 'accept'){
+      for(let i=0;i<my_cards_container.children.length;i++){
+        my_cards_container.children[i].removeEventListener('click',my_move_listener);
+      }
       console.log('accept');
       setTimeout(() => {   
         accept_function();
@@ -831,6 +866,7 @@ let my_move = function(result){
     p_my.textContent = '';
     lights_out_button.removeEventListener('click',lights_out_listener);
     lights_out_button.remove();
+    lights_out_button.parentElement.classList.remove('pulsing_lights_out_button');
     enemy_cards_container.classList.add('noscroll');
     setTimeout(() => {  
       html.classList.add('end-game');
