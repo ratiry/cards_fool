@@ -57,19 +57,19 @@ let cards_object = {
   jack_leaves:['https://media.istockphoto.com/vectors/poker-playing-card-jack-club-new-design-of-playing-cards-vector-id1277184951?k=20&m=1277184951&s=170667a&w=0&h=372MSwHgxGHwgX8JC50yAlEZni7FgUpzwk7u4HBEyog=',6,'leaves'],
   jack_spears:['https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/English_pattern_jack_of_spades.svg/360px-English_pattern_jack_of_spades.svg.png',6,'spears'],
   jack_hearts:['https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/English_pattern_jack_of_hearts.svg/360px-English_pattern_jack_of_hearts.svg.png',6,'hearts'],
-  jack_squares:['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfFUt9PAJLD97o-6sRYA-trP_qtEQjuqKL9A1JAcJpVPQS1lJIa60L0hftBwI4OrklORw&usqp=CAU',6,'squares'],
+  jack_squares:['https://previews.123rf.com/images/synchr/synchr1209/synchr120900010/15278736-hand-drawn-jack-of-diamonds-playing-card.jpg',6,'squares'],
   queen_hearts:['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZsvIf-RV_yw0FKMW3nMdUe-u7s0xzXnylvXHQQrxOATaqoYR5bk2FQ_1Aq7os8uacWU0&usqp=CAU',7,'hearts'],
   queen_leaves:['https://i.pinimg.com/236x/3a/94/14/3a9414b746760a40ec53bb0dc7e8f179.jpg',7,'leaves'],
-  queen_spears:['https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Queen_of_spades_en.svg/1200px-Queen_of_spades_en.svg.png',7,'spears'],
+  queen_spears:['https://previews.123rf.com/images/mannaggia/mannaggia1409/mannaggia140900013/32651175-queen-of-spades-playing-card.jpg',7,'spears'],
   queen_squares:['https://media.istockphoto.com/vectors/queen-of-diamonds-vector-id165931594?b=1&k=20&m=165931594&s=170667a&w=0&h=9qLHBhwAbyYNiCRlu4CjsUyVNGFPzHicTMrG-QbkatQ=',7,'squares'],
   king_hearts:['https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Atlas_deck_king_of_hearts.svg/1200px-Atlas_deck_king_of_hearts.svg.png',8,'hearts'],
   king_leaves:['https://i.pinimg.com/originals/12/f7/a4/12f7a4211bbbbae45ffa90de88e20b40.png',8,'leaves'],
-  king_squares:['https://cdn3.vectorstock.com/i/1000x1000/73/57/poker-playing-card-king-diamond-vector-8697357.jpg',8,'squares'],
+  king_squares:['https://previews.123rf.com/images/mannaggia/mannaggia0911/mannaggia091100009/5957152-king-of-diamonds-playing-card.jpg',8,'squares'],
   king_spears:['https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Atlas_deck_king_of_spades.svg/800px-Atlas_deck_king_of_spades.svg.png',8,'spears'],
   ace_spears:['https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Ace_of_spades.svg/706px-Ace_of_spades.svg.png',9,'spears'],
   ace_hearts:['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn_y3kPW1ZBh4cXuuyW_DMwJMU0iIuOnPCTQHg-6rtQIvF-aWsNYoDgF1IO2PA7aU6fMM&usqp=CAU',9,'hearts'],
   ace_squares:['https://img.favpng.com/6/22/23/playing-card-ace-of-hearts-suit-ace-of-spades-png-favpng-2W0YEWWnFNHrHnWnH1guZP6SL.jpg',9,'squares'],
-  ace_leaves:['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjHPvnlVXx8td3ltqIgmrLs7wCdmUD5cWHzw&usqp=CAU',9,'leaves']
+  ace_leaves:['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQufPIDtEHH4j7LHphChOlE1lcoqq9bQ9Wa4A&usqp=CAU',9,'leaves']
 }
 let giving_cards = Object.values(cards_object);
 let deck_card_src = 'https://upload.wikimedia.org/wikipedia/commons/7/7d/Atlas_deck_card_back_green_and_dark_red.svg';
