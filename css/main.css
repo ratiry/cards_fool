@@ -64,13 +64,13 @@
   display: flex;
 }
 .cards_section .deck_container div img {
-  height: 150px;
+  height: 7vw;
   position: relative;
-  margin-left: -102px;
+  margin-left: -4.5vw;
 }
-.cards_section .deck_container div :first-child {
+.cards_section .deck_container div img:first-child {
   transform: rotate(90deg);
-  right: 110px;
+  right: 20%;
 }
 .cards_section .deck_container p {
   color: yellow;
@@ -98,8 +98,8 @@
   display: none;
 }
 .cards_section .play_field_container .play_cards_set img {
-  height: 150px;
-  width: 110px;
+  width: 6vw;
+  height: 7vw;
 }
 .cards_section .lights_out_container {
   position: relative;
@@ -228,6 +228,58 @@ html.end-game.my-victory .end-game-popup.victory {
   transform: scale(1) translateY(-50%) translateX(-50%);
   visibility: visible;
   opacity: 1;
+}
+
+.welcoming-slide {
+  z-index: 100;
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  transform: translateX(-50%) translateY(-50%);
+  left: 50%;
+  top: 50%;
+  justify-content: space-between;
+  height: 10%;
+  align-items: center;
+}
+.welcoming-slide .leadership-button-container {
+  max-width: 10vw;
+  display: flex;
+  flex-direction: column;
+}
+.welcoming-slide .leadership-button-container .leaderboard-button {
+  background: none;
+  width: 170px;
+  border: none;
+}
+.welcoming-slide .leadership-button-container .leaderboard-button svg {
+  transition: all 0.5s linear;
+  opacity: 0;
+}
+.welcoming-slide .leadership-button-container .leaderboard-button svg path {
+  fill: gold;
+}
+.welcoming-slide .leadership-button-container .leaderboard-button:hover svg {
+  opacity: 1;
+}
+.welcoming-slide .leadership-button-container .leaderboard-button:hover .leaderboard-inner {
+  background: silver;
+}
+.welcoming-slide .leadership-button-container .leaderboard-button .leaderboard-inner {
+  background: gold;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: all 0.6s linear;
+}
+
+html.start-game .overlay {
+  display: block;
+  background-image: url("https://media.istockphoto.com/vectors/seamless-pattern-with-playing-card-suits-on-green-background-vector-id696973922?k=20&m=696973922&s=612x612&w=0&h=b-E6w7KobibLFtHvvSqQQQy8hK14VM-c-YkHY4zVjF4=");
+  background-size: 100%;
+  opacity: 1;
+}
+html.start-game .welcoming-slide {
+  display: flex;
 }
 
 @keyframes pulsing_lights_out_button_animation {

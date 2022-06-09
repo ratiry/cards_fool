@@ -12,6 +12,7 @@ let template_my_card = document.getElementById('my_card_template');
 let template_play = document.getElementById('template-play-field');
 let press_F5_buttons = document.querySelectorAll('.press_F5_button');
 let enemy_cards_filler = document.querySelector('.enemy_cards_filler');
+let start_game_button = document.getElementById('starter_button');
 let hearts_importance=0;
 let squares_importance = 0;
 let leaves_importance = 0;
@@ -894,44 +895,24 @@ let my_move = function(result){
 
 
 
-
-
-
-if(flag_to_switch_move == true){
-  for(let i=0;i<my_cards_container.children.length;i++){  
-    my_cards_container.children[i].removeEventListener('click', my_move_listener);
+html.classList.add('start-game');
+let start_game_function = function(){
+  html.classList.remove('start-game');
+  start_game_button.removeEventListener('click',start_game_function);
+  if(flag_to_switch_move == true){
+    for(let i=0;i<my_cards_container.children.length;i++){  
+      my_cards_container.children[i].removeEventListener('click', my_move_listener);
+    }
+    enemys_move();
+  }else{
+    my_move();
   }
-  enemys_move();
-}else{
-  my_move();
 }
+start_game_button.addEventListener('click',start_game_function);
+
 
 for(let i=0;i<press_F5_buttons.length;i++){
   press_F5_buttons[i].addEventListener('click', function(){
     location.reload();
   });
-}
-let entering_code = '';
-let succumb_code = '00010000';
-let code_author = '1000';
-for(let i=0;i<my_cards_container.children.length;i++){
-  my_cards_container.children[i].addEventListener('click',function(){
-    entering_code = entering_code + i;
-    console.log(entering_code);
-    if(code_author == entering_code){
-      easter_egg_author();  
-    }else if(succumb_code == entering_code){
-      permission_to_succumb = true;
-    }
-  })
-}
-let easter_egg_author = function(){
-  for(let i=0;i<play_field_container.children.length;i++){
-    play_field_container.children[i].remove();
-  }
-  for(let i=0;i<play_field_container.children.length;i++){
-    play_field_container.children[i].remove();
-  }
-  press_F5.textContent = 'Made by Slava in 2022';
-  play_field_container.appendChild(press_F5);
 }
