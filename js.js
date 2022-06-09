@@ -11,7 +11,7 @@ let p_enemys = document.getElementById('p_enemys');
 let template_my_card = document.getElementById('my_card_template');
 let template_play = document.getElementById('template-play-field');
 let press_F5_buttons = document.querySelectorAll('.press_F5_button');
-
+let enemy_cards_filler = document.querySelector('.enemy_cards_filler');
 let hearts_importance=0;
 let squares_importance = 0;
 let leaves_importance = 0;
@@ -84,6 +84,9 @@ for(let i=0;i<Object.keys(cards_object).length;i++){
 }
 
 let chosen_trump = 0;
+
+
+
 
 let chosen_trump_index =0;
 console.log(trump_array);
@@ -311,8 +314,12 @@ let placing_enemy_cards = function(){
     let enemy_cards_quanity = shuffling_function(enemy_cards_container);
     for(let i=0;i<enemy_cards_quanity.length;i++){
       let img = document.createElement('img');
+      let img_cover = document.createElement('img');
+      img_cover.src = deck_card_src;
       img.src = enemy_cards_quanity[i][0];
+      enemy_cards_filler.appendChild(img_cover);
       enemy_cards_container.appendChild(img);
+
       if(enemy_cards_quanity[i][2] == choice_badge_trump){
         enemy_importance_array.push(enemy_cards_quanity[i][1]);
       }
@@ -330,6 +337,7 @@ let placing_enemy_cards = function(){
     }
   }
   sorting_cards(enemy_cards_container);
+
 }
 placing_enemy_cards();
 let whose_turn = '';
@@ -380,7 +388,7 @@ let futher_moves_enemy = function(enemy_worth_array,enemy_house_array,enemy_card
     console.log(play_field_imgs_inf[i]);
     for(let ii=0;ii<enemy_worth_array.length;ii++){
       console.log(enemy_worth_array[ii]);
-      if(enemy_worth_array[ii] ==play_field_imgs_inf[i][0]  || enemy_worth_array[ii] ==play_field_imgs_inf[i][0]-100 ){
+      if(enemy_worth_array[ii] ==play_field_imgs_inf[i][0]  || enemy_worth_array[ii] ==play_field_imgs_inf[i][0]-100){
         giving_cards.push(enemy_cards_inf[ii]);
         to_resume = true;
         break;       
@@ -536,9 +544,11 @@ let accept_listener  = function(){
 
 let enemys_move_forming_card = function(enemy_card_src){
   let enemy_imgs = enemy_cards_container.querySelectorAll('img');
+  let enemy_imgs_filler = enemy_cards_filler.querySelectorAll('img');
   let victory_flag = false;
   for(let i=0;i<enemy_imgs.length;i++){
     if(enemy_imgs[i].src == enemy_card_src){
+      enemy_imgs_filler[i].remove();
       enemy_imgs[i].remove();
       if(enemy_cards_container.children.length ==0){
         victory_flag = true;
@@ -665,7 +675,7 @@ let enemys_move = function(result){
     p_enemys.textContent = 'WON';
     lights_out_button.removeEventListener('click',accept_listener);
     lights_out_button.remove();
-    enemy_cards_container.classList.add('noscroll');
+    enemy_cards_filler.classList.add('noscroll');
     setTimeout(() => {  
       html.classList.add('end-game');
       html.classList.add('enemys-victory');
@@ -726,25 +736,11 @@ let enemys_response = function(){
     for(let i=0;i<enemy_cards_container.children.length;i++){
       if(enemy_cards_container.children[i].src == chosen_card_src){
         enemy_cards_container.children[i].remove();
+        enemy_cards_filler.children[i].remove();
         break;
       }
     }
-    let my_cards_imgs = my_cards_container.querySelectorAll('img');
-    let play_field_imgs = play_field_container.querySelectorAll('img');
-    let restriction_to_pulsing = false;
-    for(let i=0;i<my_cards_imgs.length;i++){
-      let my_card_inf = recognizing_card(my_cards_imgs[i]);
-      for(let ii=0;ii<play_field_imgs.length;ii++){
-        let play_field_img_inf = recognizing_card(play_field_imgs[ii]);
-        if(play_field_img_inf[0] == my_card_inf[0] || play_field_img_inf[0] -100== my_card_inf[0] ||play_field_img_inf[0]== my_card_inf[0] -100){
-          restriction_to_pulsing = true;
-          break;
-        }
-      }
-    }
-    if(restriction_to_pulsing == false){
-      lights_out_button.parentElement.classList.add('pulsing_lights_out_button');
-    }
+
     if(enemy_cards_container.children.length ==0){
       my_move('enemys victory');
     }
@@ -779,6 +775,21 @@ let my_move_listener = function(event){
   }else{
     let play_field_imgs = play_field_container.querySelectorAll('img');
     let permission_to_give = false;
+    let my_cards_imgs = my_cards_container.querySelectorAll('img');
+    let restriction_to_pulsing = false;
+    for(let i=0;i<my_cards_imgs.length;i++){
+      let my_card_inf = recognizing_card(my_cards_imgs[i]);
+      for(let ii=0;ii<play_field_imgs.length;ii++){
+        let play_field_img_inf = recognizing_card(play_field_imgs[ii]);
+        if(play_field_img_inf[0] == my_card_inf[0] || play_field_img_inf[0] -100== my_card_inf[0] ||play_field_img_inf[0]== my_card_inf[0] -100){
+          restriction_to_pulsing = true;
+          break;
+        }
+      }
+    }
+    if(restriction_to_pulsing == false){
+      lights_out_button.parentElement.classList.add('pulsing_lights_out_button');
+    }
     for(let i=0;i<play_field_imgs.length;i++){
       let play_field_card_inf = recognizing_card(play_field_imgs[i]);
       if(play_field_card_inf[0] == card_inf[0] ||play_field_card_inf[0] -100== card_inf[0] || play_field_card_inf[0] == card_inf[0]-100){
@@ -819,8 +830,12 @@ let accept_function = function(){
     button.remove();
     play_field_imgs[i].remove();
     enemy_cards_container.appendChild(play_field_imgs[i]);
+    let img = document.createElement('img');
+    img.src = deck_card_src;
+    enemy_cards_filler.appendChild(img);
   }
   enemy_cards_container.children[enemy_cards_container.children.length-1].remove();
+  enemy_cards_filler.children[enemy_cards_filler.children.length-1].remove();  
 }
 let my_move = function(result){
   lights_out_button.removeEventListener('click',lights_out_listener);
@@ -851,11 +866,6 @@ let my_move = function(result){
       for(let i=0;i<my_cards_container.children.length;i++){
         my_cards_container.children[i].addEventListener('click',my_move_listener);
       }
-      // if(play_field_container.children.length >0){
-      //   lights_out_button.addEventListener('click',lights_out_listener);
-      //   lights_out_button.textContent = 'lights out';
-      //   lights_out_button.style.display = 'block';
-      // }
     }
     
   }
@@ -866,8 +876,7 @@ let my_move = function(result){
     p_my.textContent = '';
     lights_out_button.removeEventListener('click',lights_out_listener);
     lights_out_button.remove();
-    lights_out_button.parentElement.classList.remove('pulsing_lights_out_button');
-    enemy_cards_container.classList.add('noscroll');
+    enemy_cards_filler.classList.add('noscroll');
     setTimeout(() => {  
       html.classList.add('end-game');
       html.classList.add('enemys-victory');

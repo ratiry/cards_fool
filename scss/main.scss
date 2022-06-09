@@ -17,9 +17,13 @@
       display:flex;
       justify-content: center;
       width:auto;
-      
       overflow:scroll;
       flex-wrap: wrap;
+      &.enemy_cards_filler{
+        img{
+          margin-right:3px;
+        }
+      }
       &::-webkit-scrollbar{
         height:0;
         background:yellow;
@@ -171,6 +175,7 @@ p{
   background: green;
   border-radius: 30px;
   max-width:210px;
+
   div{
     display: flex;
     flex-direction: column;
@@ -249,4 +254,7 @@ html.end-game.my-victory{
   animation-duration:0.5s;
   animation-iteration-count: infinite;
   animation-direction:alternate;
+}
+.enemy_cards_container{
+  display:none;
 }

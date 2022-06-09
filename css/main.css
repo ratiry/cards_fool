@@ -22,6 +22,9 @@
   overflow: scroll;
   flex-wrap: wrap;
 }
+.cards_section .playing_cards_container .playing_cards.enemy_cards_filler img {
+  margin-right: 3px;
+}
 .cards_section .playing_cards_container .playing_cards::-webkit-scrollbar {
   height: 0;
   background: yellow;
@@ -240,5 +243,9 @@ html.end-game.my-victory .end-game-popup.victory {
   animation-duration: 0.5s;
   animation-iteration-count: infinite;
   animation-direction: alternate;
+}
+
+.enemy_cards_container {
+  display: none;
 }
 /*# sourceMappingURL=main.css.map */
