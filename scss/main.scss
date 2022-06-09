@@ -92,6 +92,7 @@
     flex-wrap:wrap;
     justify-content:center;
     align-items:center;
+    margin-bottom:5%;
     .play_cards_set{
       position:relative;
       margin-right:5px;
@@ -99,7 +100,7 @@
         position:absolute;
         position: absolute;
         left: 0px;
-        bottom: 35px;
+        transform: translateY(-50%);
         display:none;
       }
       img{
