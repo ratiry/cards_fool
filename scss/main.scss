@@ -22,7 +22,7 @@
       flex-wrap: wrap;
       &.enemy_cards_filler{
         img{
-          margin-right:3px;
+          margin-right:0.3vw;
         }
       }
       &::-webkit-scrollbar{
@@ -97,11 +97,12 @@
     .play_cards_set{
       position:relative;
       margin-right:5px;
+      margin-bottom:1px;
       .to-beated-card{
         position:absolute;
         position: absolute;
         left: 0px;
-        transform: translateY(-50%);
+        transform: translateY(-125%);
         display:none;
       }
       img{
@@ -301,12 +302,21 @@ html.start-game{
 
   }
 }
+
 @keyframes pulsing_lights_out_button_animation{
   0%{
     transform:scale(1);
   }
   100%{
     transform:scale(1.2);
+  }
+}
+@keyframes pulsing_lights_out_button_mobile {
+  0%{
+    transform:scale(1);
+  }
+  100%{
+    transform:scale(0.8);
   }
 }
 @keyframes glowing_lights_out_button_animation{
@@ -319,17 +329,40 @@ html.start-game{
     color:yellow;
   }
 }
-
+.asking_to_turn_mobile{
+  display:none;
+  z-index:50;
+  visibility:hidden;
+  position:absolute;
+  width:100vw;
+  height:100vh;
+  background:white;
+  .asking_inner{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  img{
+    width:100%;
+    vertical-align: middle;
+    margin-top:50%;
+  }
+}
 .pulsing_lights_out_button{
   animation-name:pulsing_lights_out_button_animation;
   animation-duration:0.5s;
   animation-iteration-count: infinite;
   animation-direction:alternate;
 }
+
 .enemy_cards_container{
   display:none;
 }
-
+@media (max-width:400px){
+  .asking_to_turn_mobile{
+    display:block;
+  }
+}
 @media (max-height:400px), screen{
 
   .end-game-popup{
@@ -341,5 +374,13 @@ html.start-game{
     .press_F5-container{
       margin-top:15px;
     }
+  }
+  .lights_out_container{
+      .pulsing_lights_out_button{
+        animation-name:pulsing_lights_out_button_mobile;
+        animation-duration:0.5s;
+        animation-iteration-count: infinite;
+        animation-direction:alternate;
+      }
   }
 }

@@ -8,6 +8,7 @@ let my_cards_container = document.querySelector('.my_cards_container');
 let enemy_cards_container = document.querySelector('.enemy_cards_container');
 let p_my = document.getElementById('p_my');
 let p_enemys = document.getElementById('p_enemys');
+let asking_to_turn = document.getElementById('asking_to_turn_mobile');
 let template_my_card = document.getElementById('my_card_template');
 let template_play = document.getElementById('template-play-field');
 let press_F5_buttons = document.querySelectorAll('.press_F5_button');
@@ -762,7 +763,7 @@ let my_move_listener = function(event){
     card.parentElement.remove();
     if(my_cards_container.children.length ==0){
       play_set_beat_img.src = card.src;
-      console.log(card.src)
+      console.log(card.src);
       console.log(play_set_beat_img);
       play_field_container.appendChild(play_set);
       enemys_move('my victory');
@@ -798,13 +799,20 @@ let my_move_listener = function(event){
         break;
       }
     }
-
     if(permission_to_give == true){
-    let play_set_beat_img = play_set.querySelector('.beat-card');
-    card.parentElement.remove();
-    play_set_beat_img.src = card.src;
-    play_field_container.appendChild(play_set);
-    enemys_response();
+      let play_set_beat_img = play_set.querySelector('.beat-card');
+      card.parentElement.remove();
+      play_set_beat_img.src = card.src;
+      play_field_container.appendChild(play_set);
+      if(my_cards_container.children.length ==0){
+        play_set_beat_img.src = card.src;
+        console.log(card.src);
+        console.log(play_set_beat_img);
+        play_field_container.appendChild(play_set);
+        enemys_move('my victory');
+      }else{
+        enemys_response();
+      }
     }
   }
 } 
@@ -898,12 +906,15 @@ let my_move = function(result){
 html.classList.add('start-game');
 let start_game_function = function(){
   html.classList.remove('start-game');
+  asking_to_turn.style.visibility = 'visible';
   start_game_button.removeEventListener('click',start_game_function);
   if(flag_to_switch_move == true){
     for(let i=0;i<my_cards_container.children.length;i++){  
       my_cards_container.children[i].removeEventListener('click', my_move_listener);
     }
-    enemys_move();
+    setTimeout(() => {
+      enemys_move();
+    }, 3000)
   }else{
     my_move();
   }

@@ -24,7 +24,7 @@
   flex-wrap: wrap;
 }
 .cards_section .playing_cards_container .playing_cards.enemy_cards_filler img {
-  margin-right: 3px;
+  margin-right: 0.3vw;
 }
 .cards_section .playing_cards_container .playing_cards::-webkit-scrollbar {
   height: 0;
@@ -91,12 +91,13 @@
 .cards_section .play_field_container .play_cards_set {
   position: relative;
   margin-right: 5px;
+  margin-bottom: 1px;
 }
 .cards_section .play_field_container .play_cards_set .to-beated-card {
   position: absolute;
   position: absolute;
   left: 0px;
-  transform: translateY(-50%);
+  transform: translateY(-125%);
   display: none;
 }
 .cards_section .play_field_container .play_cards_set img {
@@ -294,6 +295,14 @@ html.start-game .welcoming-slide {
     transform: scale(1.2);
   }
 }
+@keyframes pulsing_lights_out_button_mobile {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.8);
+  }
+}
 @keyframes glowing_lights_out_button_animation {
   0% {
     background: yellow;
@@ -304,6 +313,26 @@ html.start-game .welcoming-slide {
     color: yellow;
   }
 }
+.asking_to_turn_mobile {
+  display: none;
+  z-index: 50;
+  visibility: hidden;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background: white;
+}
+.asking_to_turn_mobile .asking_inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.asking_to_turn_mobile img {
+  width: 100%;
+  vertical-align: middle;
+  margin-top: 50%;
+}
+
 .pulsing_lights_out_button {
   animation-name: pulsing_lights_out_button_animation;
   animation-duration: 0.5s;
@@ -315,12 +344,24 @@ html.start-game .welcoming-slide {
   display: none;
 }
 
+@media (max-width: 400px) {
+  .asking_to_turn_mobile {
+    display: block;
+  }
+}
 @media (max-height: 400px), screen {
   .end-game-popup .title svg, .end-game-popup .title img {
     display: none;
   }
   .end-game-popup .press_F5-container {
     margin-top: 15px;
+  }
+
+  .lights_out_container .pulsing_lights_out_button {
+    animation-name: pulsing_lights_out_button_mobile;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
   }
 }
 /*# sourceMappingURL=main.css.map */
