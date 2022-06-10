@@ -4,7 +4,8 @@
   width :100vw;
   height:100vh;
   background-image:url(https://media.istockphoto.com/photos/empty-green-casino-poker-table-cloth-with-spotlight-picture-id1092139474?k=20&m=1092139474&s=612x612&w=0&h=iWwvolq21sBzJZkqmigkdwNW6_cuQ1pQSNQmBE0a4V0=);
-  background-size:100%;
+  background-size: cover;
+  background-repeat: no-repeat;
   position:relative;
   .playing_cards_container{
     flex-basis:60%;
@@ -120,14 +121,15 @@
       display:flex;
       margin-top:95px;
       img{
-        height: 150px;
-        margin-right: -95px;
+        height: 10vw;
+        margin-right: -6.5vw;
       }
     }
     .lights_out_wrapper{
       align-self: center;
       margin-bottom:80px;
       transform-origin: 50%;
+
       button{
         display:none;
         text-transform:uppercase;
@@ -136,6 +138,7 @@
         font-weight: bold;
         border-radius: 26px;
         width:120px ;
+        max-width:20vw;
         transition:all 0.2s linear;
         &:hover{
           transform:scale(1.2);
@@ -194,6 +197,7 @@ p{
     padding:10px;
     margin-top:5px;
     margin-bottom:5px;
+    max-height: 7vh;
     span{
       color:yellow;
       text-align:center;
@@ -305,10 +309,17 @@ html.start-game{
     transform:scale(1.2);
   }
 }
-@media (max-width:2000px){
-
-
+@keyframes glowing_lights_out_button_animation{
+  0%{
+    background:yellow;
+    color:black;
+  }
+  100%{
+    background:black;
+    color:yellow;
+  }
 }
+
 .pulsing_lights_out_button{
   animation-name:pulsing_lights_out_button_animation;
   animation-duration:0.5s;
@@ -317,4 +328,18 @@ html.start-game{
 }
 .enemy_cards_container{
   display:none;
+}
+
+@media (max-height:400px), screen{
+
+  .end-game-popup{
+    .title{
+      svg,img{
+        display:none;
+      }
+    }
+    .press_F5-container{
+      margin-top:15px;
+    }
+  }
 }

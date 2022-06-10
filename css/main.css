@@ -4,7 +4,8 @@
   width: 100vw;
   height: 100vh;
   background-image: url(https://media.istockphoto.com/photos/empty-green-casino-poker-table-cloth-with-spotlight-picture-id1092139474?k=20&m=1092139474&s=612x612&w=0&h=iWwvolq21sBzJZkqmigkdwNW6_cuQ1pQSNQmBE0a4V0=);
-  background-size: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
   position: relative;
 }
 .cards_section .playing_cards_container {
@@ -85,6 +86,7 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  margin-bottom: 5%;
 }
 .cards_section .play_field_container .play_cards_set {
   position: relative;
@@ -94,7 +96,7 @@
   position: absolute;
   position: absolute;
   left: 0px;
-  bottom: 35px;
+  transform: translateY(-50%);
   display: none;
 }
 .cards_section .play_field_container .play_cards_set img {
@@ -114,8 +116,8 @@
   margin-top: 95px;
 }
 .cards_section .lights_out_container .lights_out_container_inner img {
-  height: 150px;
-  margin-right: -95px;
+  height: 10vw;
+  margin-right: -6.5vw;
 }
 .cards_section .lights_out_container .lights_out_wrapper {
   align-self: center;
@@ -130,6 +132,7 @@
   font-weight: bold;
   border-radius: 26px;
   width: 120px;
+  max-width: 20vw;
   transition: all 0.2s linear;
 }
 .cards_section .lights_out_container .lights_out_wrapper button:hover {
@@ -188,6 +191,7 @@ p {
   padding: 10px;
   margin-top: 5px;
   margin-bottom: 5px;
+  max-height: 7vh;
 }
 .end-game-popup .advise span {
   color: yellow;
@@ -290,6 +294,16 @@ html.start-game .welcoming-slide {
     transform: scale(1.2);
   }
 }
+@keyframes glowing_lights_out_button_animation {
+  0% {
+    background: yellow;
+    color: black;
+  }
+  100% {
+    background: black;
+    color: yellow;
+  }
+}
 .pulsing_lights_out_button {
   animation-name: pulsing_lights_out_button_animation;
   animation-duration: 0.5s;
@@ -299,5 +313,14 @@ html.start-game .welcoming-slide {
 
 .enemy_cards_container {
   display: none;
+}
+
+@media (max-height: 400px), screen {
+  .end-game-popup .title svg, .end-game-popup .title img {
+    display: none;
+  }
+  .end-game-popup .press_F5-container {
+    margin-top: 15px;
+  }
 }
 /*# sourceMappingURL=main.css.map */
