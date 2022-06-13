@@ -72,6 +72,8 @@
       img{
         height: 7vw;
         position: relative;
+      }
+      img:not(:first-child){
         margin-left: -4.5vw;
       }
       img:first-child{
@@ -168,6 +170,7 @@ p{
   opacity:0.5;
   display:none;
   position:absolute;
+  
 }
 .end-game-popup{
   transition:all 1s linear;
@@ -193,6 +196,9 @@ p{
     path{
       fill:yellow;
     }
+  }
+  img{
+    display:block;
   }
   .advise{
     padding:10px;
@@ -247,46 +253,138 @@ html.end-game.my-victory{
     opacity:1;
   }
 }
+
+  
 .welcoming-slide{
-  z-index:100;
   display:none;
+  z-index:100;
   flex-direction: column;
   position:absolute;
   transform: translateX(-50%) translateY(-50%);
   left:50%;
   top:50%;
-  justify-content:space-between;
+  justify-content:space-around;
   height:10%;
   align-items:center;
+  .starter-button-container button{
+    border-radius: 30px;
+    padding: 10px;
+    background: lightgreen;
+    font-weight: bold;
+    text-transform: uppercase;
+    transform: scale(1.5);
+  }
   .leadership-button-container{
-    max-width: 10vw;
-    display: flex;
-    flex-direction: column;
-    .leaderboard-button{
-      background: none;
-      width: 170px;
+    button{
       border: none;
+      background: none;
+      width:200px;
+      .leaderboard-inner{
+        background: gold;
+        padding: 11px;
+        transition:all 0.4s linear;
+        span{
+          text-transform: uppercase;
+          font-weight: bold;
+          font-size:24px;
+        }
+      }
       svg{
-        transition: all 0.5s linear;
-        opacity:0;
         path{
-          fill:gold;
+          fill:silver;
+          transition:all 0.5s linear;
         }
       }
       &:hover{
         svg{
-          opacity:1;
+          path{
+            fill:gold;
+          }
         }
         .leaderboard-inner{
           background:silver;
-        }  
+        }
       }
-      .leaderboard-inner{
-        background: gold;
+    }
+  }
+}
+.slide{
+  position:absolute;
+  width:100%;
+  height:100vh;
+  z-index:100;
+}
+.opponents-slide{
+  display:none;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction:column;
+  .back-to-main{
+    position: absolute;
+    transform: scale(6.5);
+    top: 5vh;
+    left: 10vw;
+    background:none;
+    border:none;
+    &:hover{
+      svg{
+        path{
+          
+          fill:orange;
+        }
+      }
+    }
+    svg{
+      width:10px;
+      transform:rotate(-90deg);
+      path{
+        transition:all 0.5s linear;
+        fill:yellow;
+      }
+    }
+  }
+  .opponents-slide-inner{
+    width:inherit;
+    p{
+      text-align:center;
+    }
+    .back-to-main{
+      border:none;
+      background:none;
+      transform: scale(5.5);
+      left: 10vw;
+      top: 10vh;
+    }
+    .opponents{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width:inherit;
+      button{
+        width: 180px;
+        height:45px;
+        font-size:25px;
         text-transform: uppercase;
         font-weight: bold;
-        transition:all 0.6s linear;
       }
+      & div:first-child button{
+        background: lightgreen;
+      }
+      & div:last-child button{
+        background:red;
+        color:yellow;
+      }
+      & div:nth-child(2) button{
+        background:yellow;
+      }   
+    }
+  }
+}
+@media (max-width:700px){
+  .opponents-slide{
+    .opponents{
+      flex-direction:column;
+      justify-content:center;
     }
   }
 }
@@ -294,14 +392,14 @@ html.start-game{
   .overlay{
     display:block;
     background-image:url('https://media.istockphoto.com/vectors/seamless-pattern-with-playing-card-suits-on-green-background-vector-id696973922?k=20&m=696973922&s=612x612&w=0&h=b-E6w7KobibLFtHvvSqQQQy8hK14VM-c-YkHY4zVjF4=');
-    background-size:100%;
+    background-size:cover;
     opacity:1;
   }
   .welcoming-slide{
     display:flex;
-
   }
 }
+
 
 @keyframes pulsing_lights_out_button_animation{
   0%{
@@ -347,6 +445,9 @@ html.start-game{
     vertical-align: middle;
     margin-top:50%;
   }
+  span{
+    text-align:center;
+  }
 }
 .pulsing_lights_out_button{
   animation-name:pulsing_lights_out_button_animation;
@@ -358,12 +459,12 @@ html.start-game{
 .enemy_cards_container{
   display:none;
 }
-@media (max-width:400px){
-  .asking_to_turn_mobile{
-    display:block;
-  }
-}
-@media (max-height:400px), screen{
+// @media (max-width:600px) {
+//   .asking_to_turn_mobile{
+//     display:block;
+//   }
+// }
+@media (max-width:700px){
 
   .end-game-popup{
     .title{

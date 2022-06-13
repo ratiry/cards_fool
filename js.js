@@ -14,6 +14,9 @@ let template_play = document.getElementById('template-play-field');
 let press_F5_buttons = document.querySelectorAll('.press_F5_button');
 let enemy_cards_filler = document.querySelector('.enemy_cards_filler');
 let start_game_button = document.getElementById('starter_button');
+let welcoming_slide = document.querySelector('.welcoming-slide');
+let opponent_slide = document.querySelector('.opponents-slide');
+let back_to_main_from_opponents = document.getElementById('back_to_main_from_opponents');
 let hearts_importance=0;
 let squares_importance = 0;
 let leaves_importance = 0;
@@ -903,6 +906,7 @@ let my_move = function(result){
 
 
 
+
 html.classList.add('start-game');
 let start_game_function = function(){
   html.classList.remove('start-game');
@@ -919,8 +923,16 @@ let start_game_function = function(){
     my_move();
   }
 }
-start_game_button.addEventListener('click',start_game_function);
-
+let play_button_function = function(){
+  welcoming_slide.style.display = 'none';
+  opponent_slide.style.display = 'flex';
+}
+let back_to_main_from_opponents_function = function(){
+  welcoming_slide.style.display = 'flex';
+  opponent_slide.style.display = 'none';
+}
+start_game_button.addEventListener('click',play_button_function);
+back_to_main_from_opponents.addEventListener('click',back_to_main_from_opponents_function);
 
 for(let i=0;i<press_F5_buttons.length;i++){
   press_F5_buttons[i].addEventListener('click', function(){

@@ -67,6 +67,8 @@
 .cards_section .deck_container div img {
   height: 7vw;
   position: relative;
+}
+.cards_section .deck_container div img:not(:first-child) {
   margin-left: -4.5vw;
 }
 .cards_section .deck_container div img:first-child {
@@ -188,6 +190,9 @@ p {
 .end-game-popup svg path {
   fill: yellow;
 }
+.end-game-popup img {
+  display: block;
+}
 .end-game-popup .advise {
   padding: 10px;
   margin-top: 5px;
@@ -236,51 +241,130 @@ html.end-game.my-victory .end-game-popup.victory {
 }
 
 .welcoming-slide {
-  z-index: 100;
   display: none;
+  z-index: 100;
   flex-direction: column;
   position: absolute;
   transform: translateX(-50%) translateY(-50%);
   left: 50%;
   top: 50%;
-  justify-content: space-between;
+  justify-content: space-around;
   height: 10%;
   align-items: center;
 }
-.welcoming-slide .leadership-button-container {
-  max-width: 10vw;
-  display: flex;
-  flex-direction: column;
+.welcoming-slide .starter-button-container button {
+  border-radius: 30px;
+  padding: 10px;
+  background: lightgreen;
+  font-weight: bold;
+  text-transform: uppercase;
+  transform: scale(1.5);
 }
-.welcoming-slide .leadership-button-container .leaderboard-button {
-  background: none;
-  width: 170px;
+.welcoming-slide .leadership-button-container button {
   border: none;
+  background: none;
+  width: 200px;
 }
-.welcoming-slide .leadership-button-container .leaderboard-button svg {
-  transition: all 0.5s linear;
-  opacity: 0;
-}
-.welcoming-slide .leadership-button-container .leaderboard-button svg path {
-  fill: gold;
-}
-.welcoming-slide .leadership-button-container .leaderboard-button:hover svg {
-  opacity: 1;
-}
-.welcoming-slide .leadership-button-container .leaderboard-button:hover .leaderboard-inner {
-  background: silver;
-}
-.welcoming-slide .leadership-button-container .leaderboard-button .leaderboard-inner {
+.welcoming-slide .leadership-button-container button .leaderboard-inner {
   background: gold;
+  padding: 11px;
+  transition: all 0.4s linear;
+}
+.welcoming-slide .leadership-button-container button .leaderboard-inner span {
   text-transform: uppercase;
   font-weight: bold;
-  transition: all 0.6s linear;
+  font-size: 24px;
+}
+.welcoming-slide .leadership-button-container button svg path {
+  fill: silver;
+  transition: all 0.5s linear;
+}
+.welcoming-slide .leadership-button-container button:hover svg path {
+  fill: gold;
+}
+.welcoming-slide .leadership-button-container button:hover .leaderboard-inner {
+  background: silver;
 }
 
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  z-index: 100;
+}
+
+.opponents-slide {
+  display: none;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
+.opponents-slide .back-to-main {
+  position: absolute;
+  transform: scale(6.5);
+  top: 5vh;
+  left: 10vw;
+  background: none;
+  border: none;
+}
+.opponents-slide .back-to-main:hover svg path {
+  fill: orange;
+}
+.opponents-slide .back-to-main svg {
+  width: 10px;
+  transform: rotate(-90deg);
+}
+.opponents-slide .back-to-main svg path {
+  transition: all 0.5s linear;
+  fill: yellow;
+}
+.opponents-slide .opponents-slide-inner {
+  width: inherit;
+}
+.opponents-slide .opponents-slide-inner p {
+  text-align: center;
+}
+.opponents-slide .opponents-slide-inner .back-to-main {
+  border: none;
+  background: none;
+  transform: scale(5.5);
+  left: 10vw;
+  top: 10vh;
+}
+.opponents-slide .opponents-slide-inner .opponents {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: inherit;
+}
+.opponents-slide .opponents-slide-inner .opponents button {
+  width: 180px;
+  height: 45px;
+  font-size: 25px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.opponents-slide .opponents-slide-inner .opponents div:first-child button {
+  background: lightgreen;
+}
+.opponents-slide .opponents-slide-inner .opponents div:last-child button {
+  background: red;
+  color: yellow;
+}
+.opponents-slide .opponents-slide-inner .opponents div:nth-child(2) button {
+  background: yellow;
+}
+
+@media (max-width: 700px) {
+  .opponents-slide .opponents {
+    flex-direction: column;
+    justify-content: center;
+  }
+}
 html.start-game .overlay {
   display: block;
   background-image: url("https://media.istockphoto.com/vectors/seamless-pattern-with-playing-card-suits-on-green-background-vector-id696973922?k=20&m=696973922&s=612x612&w=0&h=b-E6w7KobibLFtHvvSqQQQy8hK14VM-c-YkHY4zVjF4=");
-  background-size: 100%;
+  background-size: cover;
   opacity: 1;
 }
 html.start-game .welcoming-slide {
@@ -332,6 +416,9 @@ html.start-game .welcoming-slide {
   vertical-align: middle;
   margin-top: 50%;
 }
+.asking_to_turn_mobile span {
+  text-align: center;
+}
 
 .pulsing_lights_out_button {
   animation-name: pulsing_lights_out_button_animation;
@@ -344,12 +431,7 @@ html.start-game .welcoming-slide {
   display: none;
 }
 
-@media (max-width: 400px) {
-  .asking_to_turn_mobile {
-    display: block;
-  }
-}
-@media (max-height: 400px), screen {
+@media (max-width: 700px) {
   .end-game-popup .title svg, .end-game-popup .title img {
     display: none;
   }
